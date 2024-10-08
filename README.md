@@ -12,6 +12,8 @@ Plan to add basic environmental data (temperature, humidity, etc.)
 
 Uses a combination of Python and shell (/bin/sh) scripts controlled by crontab.
 
+---
+
 # Hardward details
 
 Ultimate GPS Hat (Adafruit)
@@ -26,6 +28,8 @@ Studio Illumination GPIO12 (latching relay)
 
 Attractor Illumination GPIO16 (latching relay)
 
+---
+
 # Code details
 
 Code in /home/arducam/bin
@@ -36,7 +40,7 @@ Backups in /home/arducam/backup
 
 USB mount /mnt/usb (see fstab)
 
-List of files
+##List of files##
 
 • data*.py    Run by crontab: check status switch, initiate collection or transfer data
 
@@ -46,6 +50,7 @@ List of files
 
 • usb*         Manages data transfer and backups
 
+---
 
 # USAGE
 
