@@ -36,6 +36,16 @@ Backups in /home/arducam/backup
 
 USB mount /mnt/usb (see fstab)
 
+List of files
+
+• data*.py    Run by crontab: check status switch, initiate collection or transfer data
+
+• take*.sh    Shell scripts run by data*.py that interact with sensor hardware
+
+• getGPS.sh    Need to rename takeGPS.sh for consistency
+
+• usb*         Manages data transfer and backups
+
 
 # USAGE
 
