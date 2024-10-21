@@ -42,33 +42,33 @@ USB mount /mnt/usb (see fstab)
 
 ## List of files
 
-• AudioRecording.sh	Collects USB Audio data (30 seconds).
+• **AudioRecording.sh**	Collects USB Audio data (30 seconds).
 
-• checkMode.py		This reports the status of the user switch.
+• **checkMode.py**		This reports the status of the user switch.
 
-• checkUSBcopySpace.py	Compares data directory to USB space prior to copy.
+• **checkUSBcopySpace.py**	Compares data directory to USB space prior to copy.
 
-• config.py		Paths, defaults, and helper code.
+• **config.py**		Paths, defaults, and helper code.
 
-• crontab.txt		A sample contrab.
+• **crontab.txt**		A sample contrab.
 
-• dataCollection.py	The main script called by crontab.
+• **dataCollection.py**	The main script called by crontab.
 
-• dockerDUFS.sh		The web interface (port 5000).
+• **dockerDUFS.sh**		The web interface (port 5000).
 
-• mountUSB.sh		Mounts the USB drive for backups.
+• **mountUSB.sh**		Mounts the USB drive for backups.
 
-• statusBlinker.py	Drives the LED status signals.
+• **statusBlinker.py**	Drives the LED status signals.
 
-• takeAudioSample.sh	Takes an Audio sample via USB microphone.
+• **takeAudioSample.sh**	Takes an Audio sample via USB microphone.
 
-• takeGPS.sh		Reads the GPS Hat and logs the data.
+• **takeGPS.sh**		Reads the GPS Hat and logs the data.
 
-• takeStudioPhoto.sh	Takes a photo using libcamera-still.
+• **takeStudioPhoto.sh**	Takes a photo using libcamera-still.
 
-• umountUSB.sh		Unmounts the USB drive.
+• **umountUSB.sh**		Unmounts the USB drive.
 
-• usbFileManagement.py	Manages data handling for backups to USB drives.
+• **usbFileManagement.py**	Manages data handling for backups to USB drives.
 
 ---
 
