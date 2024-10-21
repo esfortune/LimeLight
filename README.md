@@ -22,11 +22,11 @@ AudioMoth USB Microphone (384kHz sample rate)
 
 Arducam Owlsight camera (64MP)
 
-"Acquisition / Download" DPDT switch @ GPIO23
+"Acquisition / Download" DPDT switch [GPIO]
 
-Studio Illumination GPIO12 (latching relay)
+Studio Illumination (latching relay) [GPIO]
 
-Attractor Illumination GPIO16 (latching relay)
+Attractor Illumination (latching relay) [GPIO]
 
 ---
 
@@ -42,23 +42,15 @@ USB mount /mnt/usb (see fstab)
 
 ## List of files
 
-• **AudioRecording.sh**	Collects USB Audio data (30 seconds).
+• **config.py**		Paths, defaults, and locations of helper code.
+
+• **crontab.txt**		A sample contrab with logging.
 
 • **checkMode.py**		This reports the status of the user switch.
 
 • **checkUSBcopySpace.py**	Compares data directory to USB space prior to copy.
 
-• **config.py**		Paths, defaults, and helper code.
-
-• **crontab.txt**		A sample contrab.
-
 • **dataCollection.py**	The main script called by crontab.
-
-• **dockerDUFS.sh**		The web interface (port 5000).
-
-• **mountUSB.sh**		Mounts the USB drive for backups.
-
-• **statusBlinker.py**	Drives the LED status signals.
 
 • **takeAudioSample.sh**	Takes an Audio sample via USB microphone.
 
@@ -66,9 +58,15 @@ USB mount /mnt/usb (see fstab)
 
 • **takeStudioPhoto.sh**	Takes a photo using libcamera-still.
 
+• **mountUSB.sh**		Mounts the USB drive for backups.
+
 • **umountUSB.sh**		Unmounts the USB drive.
 
 • **usbFileManagement.py**	Manages data handling for backups to USB drives.
+
+• **statusBlinker.py**	Drives the LED status signals.
+
+• **dockerDUFS.sh**		The web interface (port 5000) available on wlan0 and eth0.
 
 ---
 
