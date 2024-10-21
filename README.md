@@ -1,5 +1,5 @@
 # LimeLight
-Limelight development, Updated 7-October-2024
+Limelight development, Updated 21-October-2024
 
 This is code to run on an RPi•5 Limelight controller. 
 
@@ -36,7 +36,7 @@ Code in /home/arducam/bin
 
 Data in /home/arducam/data
 
-Backups in /home/arducam/backup
+Backups in /home/arducam/data/backups
 
 USB mount /mnt/usb (see fstab)
 
