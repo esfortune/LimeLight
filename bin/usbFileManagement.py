@@ -137,13 +137,10 @@ def copy_files_to_usb():
     ### Move data to backup directory
 
     print(f"Moving the data to the Backup directory")
-#    timestamp = time.strftime("%Y%b%d-%H%M%S")
-#    backupDirectory = os.path.join(backupPath, timestamp)
     os.makedirs(backupDirectory, exist_ok=True)
     shutil.move(datadir, backupDirectory)
     time.sleep(5)
     os.makedirs(datadir, exist_ok=True)
-
 
     print(f"Copy complete, waiting 5 seconds and unmounting USB drive.")
     time.sleep(5)
