@@ -1,11 +1,15 @@
 #!/usr/bin/python
+# This code detects the presence of a USB. If not, use LED to prompt
+# the user to insert one. Mount the USB and then check to see if there
+# is sufficient space. Copy the data from curdat to the USB, and then
+# move curdat to another directory for safe keeping.
 
 import shutil
 import time
 import os
 import subprocess
 
-### Custom
+### Our configuration
 
 import config as c
 
@@ -13,6 +17,11 @@ import config as c
 usb_device = c.usb_dev
 datadir = c.data_path  # Modify this if your directory is different
 usbdrive = c.usb_path  # Update this to match your USB mount point
+backupPath = c.backup_path
+
+timestamp = time.strftime("%Y%b%d-%H%M%S")
+backupDirectory = os.path.join(backupPath, timestamp)
+usbDirectory = os.path.join(usbdrive, timestamp)
 
 # Helper programs
 sudoMount = c.mountusb
@@ -102,12 +111,12 @@ def copy_files_to_usb():
         ledBlink = subprocess.Popen([statusLED, '6'])
         exit(1)
 
-    # Loop through files in the source data directory and copy to USB
+    ### Loop through files in the source data directory and copy to USB
     print(f"Device {usb_device} is mounted, copying files")
     ledBlink = subprocess.Popen([statusLED, '1'])
     for filename in os.listdir(datadir):
         source_file = os.path.join(datadir, filename)
-        destination_file = os.path.join(usbdrive, filename)
+        destination_file = os.path.join(usbDirectory, filename)
 
         try:
             if os.path.isfile(source_file):
@@ -122,8 +131,19 @@ def copy_files_to_usb():
             print(f"Error copying {filename}: {e}")
 
     print(f"Syncing data to USB.")
-    #ledBlink = subprocess.Popen([statusLED, '1'])
     os.sync()
+    time.sleep(1)
+
+    ### Move data to backup directory
+
+    print(f"Moving the data to the Backup directory")
+#    timestamp = time.strftime("%Y%b%d-%H%M%S")
+#    backupDirectory = os.path.join(backupPath, timestamp)
+    os.makedirs(backupDirectory, exist_ok=True)
+    shutil.move(datadir, backupDirectory)
+    time.sleep(5)
+    os.makedirs(datadir, exist_ok=True)
+
 
     print(f"Copy complete, waiting 5 seconds and unmounting USB drive.")
     time.sleep(5)

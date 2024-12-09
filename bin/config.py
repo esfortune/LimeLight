@@ -1,8 +1,10 @@
 #!/usr/bin/python
 
+deviceSerial = 'LL2024--v01--rev01'
+
 ### Paths
 
-backup_path = '/home/arducam/data/backup'
+backup_path = '/home/arducam/data/backups'
 base_path = '/home/arducam'
 bin_path = '/home/arducam/bin'
 data_path = '/home/arducam/data/curdat'
@@ -10,6 +12,7 @@ usb_dev = '/dev/sda'
 usb_path = '/mnt/usb'
 file2CheckPathName = '/home/arducam/FileCopyInitiated.txt'
 stemma_csvfile = '/home/arducam/data/curdat/stemmadat.csv'
+datalogfile = '/home/arducam/data/curdat/dataLog.csv'
 
 ### Helper programs
 
@@ -25,10 +28,8 @@ fileBackup = '/home/arducam/bin/usbFileManagement.py' # Copies files to USB and 
 mountusb = '/home/arducam/bin/mountUSB.sh'
 umountusb = '/home/arducam/bin/umountUSB.sh'
 
-neoREDblink = '/home/arducam/bin/neoREDBLINK.py'
-neoGREENblink = '/home/arducam/bin/neoGREENBLINK.py'
 statusLED = '/home/arducam/bin/statusBlinker.py'
-
+eINKupdate = '/home/arducam/bin/eINKstatus.py'
 
 ### Which GPIO pins will we use?
 
