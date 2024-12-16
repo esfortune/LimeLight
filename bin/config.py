@@ -1,6 +1,13 @@
 #!/usr/bin/python
 
-deviceSerial = 'LL2024--v01--rev01'
+# Setting the serial number as the RustDesk identity
+# /home/arducam/serialNumber.txt only has 9 digit RustDesk number
+try:
+    with open("/home/arducam/serialNumber.txt", "r") as file:
+        deviceSerial = file.readline().strip()
+except FileNotFoundError:
+    # If the file does not exist, use a default serial number
+    deviceSerial = "D27_Serial"
 
 ### Paths
 

@@ -60,4 +60,4 @@ display.display()
 time.sleep(1)
 ledBlink = subprocess.Popen([statusLED, '6'])
 
-print(f"{timestamp}, {diskUsage}, {diskPerCentRemaining}")
+print(f"{deviceSerial}, {timestamp}, {diskUsage}, {diskPerCentRemaining}")
