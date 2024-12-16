@@ -3,5 +3,5 @@
 # work with any setup, but may need to change the dev to serial0 or ttyAMA10.
 # The 20 lines from the head command is arbitrary - it seems to work well enough.
 
-head -20 /dev/ttyAMA0 | strings | grep RMC | tail -1 >> /home/arducam/data/gpsData.csv
+head -20 /dev/ttyAMA0 | strings | grep RMC | tail -1 >> /home/arducam/data/curdat/gpsData.csv
 

@@ -8,8 +8,8 @@
 DIR="/home/arducam/data/curdat/Studio"
 
 
-attractorOFF=12
-panelOFF=16
+attractorOFF=6
+panelOFF=13
 
 
 echo "Turning Studio lights OFF and Attractor OFF"
