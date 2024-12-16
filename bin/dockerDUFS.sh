@@ -3,4 +3,4 @@
 # via port 5000. I'm not sure that this is the way to handle this process, as I want it
 # to come up and down.
 
-docker run -v ~/data:/data -p 5000:5000 --rm sigoden/dufs /data -A
+docker run -v /home/arducam/data:/data -p 5000:5000 --rm sigoden/dufs /data -A
