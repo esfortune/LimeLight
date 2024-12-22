@@ -1,4 +1,7 @@
 #!/home/arducam/Stemma/bin/python3
+# Eric Fortune, Canopy Life, December 2024 
+# Code written for Limelight Rainforest test device.
+
 # This script reads data from our Stemma devices and
 # saves to a CSV file
 

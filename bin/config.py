@@ -1,4 +1,7 @@
 #!/usr/bin/python
+# Eric Fortune, Canopy Life, December 2024 
+# Code written for Limelight Rainforest test device.
+
 
 # Setting the serial number as the RustDesk identity
 # /home/arducam/serialNumber.txt only has 9 digit RustDesk number

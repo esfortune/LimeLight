@@ -1,4 +1,7 @@
 #!/bin/sh
+# Eric Fortune, Canopy Life, December 2024 
+# Code written for Limelight Rainforest test device.
+
 # This is a trivial GPS reader for RPi5 with Adafruit Ultimate GPS hat. This should
 # work with any setup, but may need to change the dev to serial0 or ttyAMA10.
 # The 20 lines from the head command is arbitrary - it seems to work well enough.

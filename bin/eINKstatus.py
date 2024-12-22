@@ -1,5 +1,8 @@
 #!/home/arducam/eINK/bin/python3
-
+# Eric Fortune, Canopy Life, December 2024 
+# Code written for Limelight Rainforest test device.
+# Update the system status on the eINK display.
+# 
 adapim = 1 # use 1 if Adafruit 1675, use 9 if Pimoroni 1608
 
 import time

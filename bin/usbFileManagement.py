@@ -1,4 +1,7 @@
 #!/usr/bin/python
+# Eric Fortune, Canopy Life, December 2024 
+# Code written for Limelight Rainforest test device.
+
 # This code detects the presence of a USB. If not, use LED to prompt
 # the user to insert one. Mount the USB and then check to see if there
 # is sufficient space. Copy the data from curdat to the USB, and then

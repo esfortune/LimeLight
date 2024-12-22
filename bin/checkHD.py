@@ -1,4 +1,9 @@
 #!/usr/bin/python
+# Eric Fortune, Canopy Life, December 2024 
+# Code written for Limelight Rainforest test device.
+#
+# This checks the disk space. If there is less than 100 Mb free, shut the
+# device down. Otherwise repore the disk space to STDOUT.
 
 import psutil
 import os

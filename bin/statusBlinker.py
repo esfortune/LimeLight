@@ -1,4 +1,9 @@
 #!/home/arducam/neopixel/bin/python3
+# Eric Fortune, Canopy Life, December 2024 
+# Code written for Limelight Rainforest test device.
+
+# This produces different patterns of blinking from an
+# Adafruit Neopixel multicolor LED.
 
 import sys
 from time import sleep

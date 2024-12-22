@@ -1,4 +1,6 @@
 #!/home/arducam/eINK/bin/python3
+# Eric Fortune, Canopy Life, December 2024 
+# Code written for Limelight Rainforest test device.
 
 import time
 import board

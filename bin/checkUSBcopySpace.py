@@ -1,4 +1,9 @@
 #!/usr/bin/python
+# Eric Fortune, Canopy Life, December 2024 
+# Code written for Limelight Rainforest test device.
+#
+# Always check to see if you have enough space before you
+# start to copy!
 
 import os
 import shutil

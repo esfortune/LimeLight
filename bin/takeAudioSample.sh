@@ -1,4 +1,7 @@
 #!/bin/sh
+# Eric Fortune, Canopy Life, December 2024 
+# Code written for Limelight Rainforest test device.
+
 # This script takes an Audio Recording from a AudioMoth USB microphone.
 # It also makes an entry into our logging file.
 # The -d is duration in seconds. We default 30 seconds.

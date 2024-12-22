@@ -1,4 +1,11 @@
 #!/usr/bin/python
+# Eric Fortune, Canopy Life, December 2024 
+# Code written for Limelight Rainforest test device.
+
+# This code polls the sole user switch on the Limelight device.
+# If up we are in collection mode (default), if down we are in
+# download mode. This runs only when crontab calls the data 
+# collection routine. A better version would be more responsive.
 
 from gpiozero import Button
 

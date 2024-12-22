@@ -1,4 +1,8 @@
 #!/home/arducam/eINK/bin/python3
+# Eric Fortune, Canopy Life, December 2024 
+# Code written for Limelight Rainforest test device.
+# Write the 'disk is full' message to the eINK display
+# and power down immediately.
 
 adapim = 1 # use 1 if Adafruit 1675, use 9 if Pimoroni 1608
 

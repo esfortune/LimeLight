@@ -1,9 +1,12 @@
 #!/usr/bin/python
+# Eric Fortune, Canopy Life, December 2024 
+# Code written for Limelight Rainforest test device.
 #
 # This script checks the Mode: 1-collection or 0-download
-# If collection, use config.py to collect the appropriate data.
+# If collection, use config.py to guide to the right scripts to
+# collect the appropriate data. Check to see if the drive is full.
 # The code can also accept command line arguments to turn off data collection
-# If download, use usbFileManagement.py to download.
+# If download, it runs usbFileManagement.py to download.
 #
 # Code relies on config.py, which has list of dependent code and paths
 
