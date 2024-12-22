@@ -6,7 +6,7 @@ backup_path = '/home/arducam/data/backup'
 base_path = '/home/arducam'
 bin_path = '/home/arducam/bin'
 data_path = '/home/arducam/data/curdat'
-usb_dev = '/dev/sda'
+usb_dev = '/dev/sda1'
 usb_path = '/mnt/usb'
 file2CheckPathName = '/home/arducam/FileCopyInitiated.txt'
 
