@@ -1,5 +1,7 @@
 #!/home/arducam/eINK/bin/python3
 
+adapim = 1 # use 1 if Adafruit 1675, use 9 if Pimoroni 1608
+
 import time
 import board
 import busio
@@ -47,12 +49,12 @@ display.rotation = 0
 image = Image.new("L", (display.width, display.height), 255)  # White background
 draw = ImageDraw.Draw(image)
 
-draw.text((1, 1), deviceSerial, font=font, fill=0)
-draw.text((1, 15), timestamp, font=font, fill=0)
-draw.text((1, 40), "Total, Used, Free", font=font, fill=1)
-draw.text((1, 50), diskUsage, font=font, fill=0)
-draw.text((1, 65), diskPerCentRemaining, font=font, fill=0)
-draw.text((1, 90), modeMSG, font=font, fill=0)
+draw.text((adapim, 1), deviceSerial, font=font, fill=0)
+draw.text((adapim, 15), timestamp, font=font, fill=0)
+draw.text((adapim, 40), "Total, Used, Free", font=font, fill=1)
+draw.text((adapim, 50), diskUsage, font=font, fill=0)
+draw.text((adapim, 65), diskPerCentRemaining, font=font, fill=0)
+draw.text((adapim, 90), modeMSG, font=font, fill=0)
 
 display.image(image)
 display.display() 
