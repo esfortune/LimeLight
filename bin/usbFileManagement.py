@@ -112,23 +112,13 @@ def copy_files_to_usb():
         exit(1)
 
     ### Loop through files in the source data directory and copy to USB
+    ### No longer a loop.  Need to have some error catcing step here.
     print(f"Device {usb_device} is mounted, copying files")
     ledBlink = subprocess.Popen([statusLED, '1'])
-    for filename in os.listdir(datadir):
-        source_file = os.path.join(datadir, filename)
-        destination_file = os.path.join(usbDirectory, filename)
 
-        try:
-            if os.path.isfile(source_file):
-                shutil.copy2(source_file, destination_file)  # Copy with metadata
-                print(f"Copying file {filename} to USB.")
-            if os.path.isdir(source_file):
-                # Recursively copy directories
-                shutil.copytree(source_file, destination_file, dirs_exist_ok=True)
-                print(f"Copying directory {filename} to USB.")
+    shutil.copytree(datadir, usbDirectory, dirs_exist_ok=True)
 
-        except Exception as e:
-            print(f"Error copying {filename}: {e}")
+    print(f"Copying to USB.")
 
     print(f"Syncing data to USB.")
     os.sync()
