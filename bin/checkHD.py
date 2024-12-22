@@ -17,5 +17,5 @@ if disk_usage.free <= threshold:
     os.system("sudo shutdown -h now")
 
 else:
-    print(f"Available: {disk_usage.free / (1024 * 1024) /  1000:.2f} GB")
+    print(f"Current disk usage: {disk_usage.free / (1024 * 1024) /  1000:.2f} GB")
         
