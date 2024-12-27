@@ -13,3 +13,21 @@
 4 7-17 * * * /home/arducam/bin/dataCollection.py NoEnv NoAudio NoStudio NoGPS >> /home/arducam/data/curdat/errorlog.txt 2>&1
 # From 5pm to midnight, take a Studio phot every 1 minutes
 */1 17-23 * * * /home/arducam/bin/dataCollection.py NoEnv NoAudio >> /home/arducam/data/curdat/errorlog.txt 2>&1
+
+###############
+# Every 5 minutes take an 1-minute duration audio sample
+# */5 * * * * /home/arducam/bin/dataCollection.py NoStudio NoEnv >> /home/arducam/data/curdat/errorlog.txt 2>&1
+
+# From midnight until 7am, take a Studio photo every 1 minutes
+# */1 0-6 * * * /home/arducam/bin/dataCollection.py NoEnv NoAudio >> /home/arducam/data/curdat/errorlog.txt 2>&1
+# 0 7 * * * /home/arducam/bin/dataCollection.py NoEnv NoAudio >> /home/arducam/data/curdat/errorlog.txt 2>&1
+
+# Ensure that the Attractor LED and Panel LED are turned off for the day at 7:01 and 7:02am
+# 1-2 7 * * * /home/arducam/bin/allLEDsOFF.sh >> /home/arducam/data/curdat/errorlog.txt 2>&1
+
+# From 7am to 5pm, check Mode every 1 minutes that are not being checked by the audio sampling
+# 1-4,6-9 7-17 * * * /home/arducam/bin/dataCollection.py NoEnv NoAudio NoStudio NoGPS >> /home/arducam/data/curdat/errorlog.txt 2>&1
+
+# From 5pm to midnight, take a Studio phot every 1 minutes
+# */1 17-23 * * * /home/arducam/bin/dataCollection.py NoEnv NoAudio >> /home/arducam/data/curdat/errorlog.txt 2>&1
+
