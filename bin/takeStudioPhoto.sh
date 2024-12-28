@@ -38,7 +38,8 @@ libcamera-still -n --datetime
 
 # Log the capture
 filename=`ls -t *.jpg | head -1`
-echo "studio, "$filename", OwlSight, 4624x3472" >> /home/arducam/data/curdat/dataLog.csv
+serialNumber=`head -1 /home/arducam/serialNumber.txt`
+echo $serialNumber", studio, "$filename", OwlSight, 4624x3472" >> /home/arducam/data/curdat/dataLog.csv
 
 # Sleep 2 second to ensure that everything is completed before switching.
 

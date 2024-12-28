@@ -21,4 +21,5 @@ fi
 timestamp=$(date +"%Y%m%d%H%M%S")
 filename="${timestamp}.wav"
 arecord -D hw:CARD=Microphone,DEV=0 -f S16_LE -r 384000 -d 60 /home/arducam/data/curdat/Audio/$filename
-echo "audio, "$filename", AudioMoth, S16_LE, 384000, 60" >> /home/arducam/data/curdat/dataLog.csv
+serialNumber=`head -1 /home/arducam/serialNumber.txt`
+echo $serialNumber", audio, "$filename", AudioMoth, S16_LE, 384000, 60" >> /home/arducam/data/curdat/dataLog.csv
