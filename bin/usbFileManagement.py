@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # Eric Fortune, Canopy Life, December 2024 
-# Code written for Limelight Rainforest test device.
-
+# Code written for Limelight Rainforest test devices.
+#
 # This code detects the presence of a USB. If not, use LED to prompt
 # the user to insert one. Mount the USB and then check to see if there
 # is sufficient space. Copy the data from curdat to the USB, and then
@@ -85,7 +85,7 @@ def sudo_umount():
         print(f"Error running the script as sudo: {e}")
         print(f"Script error output: {e.stderr}")
 
-#################### Copy files to USB
+#################### Copy files to USB routine
 def copy_files_to_usb():
     """Copy files from the curdat directory to the USB drive."""
 
@@ -114,8 +114,10 @@ def copy_files_to_usb():
         ledBlink = subprocess.Popen([statusLED, '6'])
         exit(1)
 
+    ####################################################
     ### Loop through files in the source data directory and copy to USB
     ### No longer a loop.  Need to have some error catcing step here.
+
     print(f"Device {usb_device} is mounted, copying files")
     ledBlink = subprocess.Popen([statusLED, '1'])
 
@@ -127,6 +129,7 @@ def copy_files_to_usb():
     os.sync()
     time.sleep(1)
 
+    ####################################################
     ### Move data to backup directory
 
     print(f"Moving the data to the Backup directory")
@@ -146,7 +149,9 @@ def copy_files_to_usb():
     os.remove(file2CheckPathName)
     print(f"Done.")
 
-############ Run the script
+####################################################
+############ Run the script (This is ass backwards, need to fix)
+
 print(f"Initiating file copy routine.")
 copy_files_to_usb()
 

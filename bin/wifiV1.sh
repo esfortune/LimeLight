@@ -1,7 +1,6 @@
 #!/bin/bash
 # Version 1 from https://forums.raspberrypi.com/viewtopic.php?t=357998
 
-
 nmcli con delete AccessPoint
 nmcli con add type wifi ifname wlan0 mode ap con-name AccessPoint ssid 117722760 autoconnect false
 nmcli con modify AccessPoint 802-11-wireless.band bg
@@ -13,3 +12,10 @@ nmcli con modify AccessPoint wifi-sec.key-mgmt wpa-psk
 nmcli con modify AccessPoint wifi-sec.psk "117722760"
 nmcli con up AccessPoint
 
+touch /home/arducam/wifiUP.txt
+
+sleep 1
+
+/home/arducam/bin/dockerDUFS.sh
+
+# nmcli con down AccessPoint

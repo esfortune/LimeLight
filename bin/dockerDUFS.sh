@@ -6,8 +6,9 @@
 # to come up and down. Currenlyt I can't get it to go away.  And I am struggling with the
 # access point feature.
 
-# nmcli connection up 120308045
-# Usually IP address: 10.42.0.1 
+# -d runs in detached mode
 
-docker run -v /home/arducam/data:/data -p 5000:5000 --rm sigoden/dufs /data -A
+docker run -d -v /home/arducam/data:/data -p 5000:5000 --rm sigoden/dufs /data -A
+
+
 # docker run -v `pwd`:/data -p 5000:5000 --rm sigoden/dufs /data -A
