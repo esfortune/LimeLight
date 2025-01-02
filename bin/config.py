@@ -32,7 +32,7 @@ sampleAudio = '/home/arducam/bin/takeAudioSample.sh' # Audio Sample (ultrasonic 
 sampleGPS = '/home/arducam/bin/takeGPS.sh' # Get data from GPS device
 sampleEnvironment = '/home/arducam/bin/stemmaData.py' # Get data from environmental sensor package
 wifiUPPER = '/home/arducam/bin/wifiV1.sh'
-wifiDOWNER = '/home/arudcam/bin/wifiV1down.sh'
+wifiDOWNER = '/home/arducam/bin/wifiV1down.sh'
 msgGenerator = '/home/arducam/bin/msgGenerator.sh'
 
 checkMode = '/home/arducam/bin/checkMode.py' # Decides whether we are in COLLECT (1) or DOWNLOAD (0) mode
