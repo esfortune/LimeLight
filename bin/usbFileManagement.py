@@ -121,6 +121,24 @@ def copy_files_to_usb():
     print(f"Device {usb_device} is mounted, copying files")
     ledBlink = subprocess.Popen([statusLED, '1'])
 
+    ### FUCK ALL IF the gpio pipe doesn't fuck things up.  Remove the file if it appears.
+    file_LGpath1 = '/home/arducam/data/curdat/.lgd-nfy0'
+    file_LGpath2 = '/home/arducam/data/curdat/Studio/.lgd-nfy0'
+
+    if os.path.exists(file_LGpath1):
+        os.remove(file_LGpath1)
+        print(f"File '{file_LGpath1}' deleted successfully.")
+    else:
+        print(f"File '{file_LGpath1}' not found.")
+
+    if os.path.exists(file_LGpath2):
+        os.remove(file_LGpath2)
+        print(f"File '{file_LGpath2}' deleted successfully.")
+    else:
+        print(f"File '{file_LGpath2}' not found.")
+    ### FUCK ALL IF the gpio pipe doesn't fuck things up.  Remove the file if it appears. LGDeleter.py
+
+
     shutil.copytree(datadir, usbDirectory, dirs_exist_ok=True)
 
     print(f"Copying to USB.")
