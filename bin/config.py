@@ -21,6 +21,7 @@ data_path = '/home/arducam/data/curdat'
 usb_dev = '/dev/sda1'
 usb_path = '/mnt/usb'
 file2CheckPathName = '/home/arducam/FileCopyInitiated.txt'
+wifiPathName = '/home/arducam/wifiUP.txt'
 stemma_csvfile = '/home/arducam/data/curdat/stemmadat.csv'
 datalogfile = '/home/arducam/data/curdat/dataLog.csv'
 
@@ -30,6 +31,9 @@ samplePhoto = '/home/arducam/bin/takeStudioPhoto.sh' # Photograph (also controls
 sampleAudio = '/home/arducam/bin/takeAudioSample.sh' # Audio Sample (ultrasonic microphone)
 sampleGPS = '/home/arducam/bin/takeGPS.sh' # Get data from GPS device
 sampleEnvironment = '/home/arducam/bin/stemmaData.py' # Get data from environmental sensor package
+wifiUPPER = '/home/arducam/bin/wifiV1.sh'
+wifiDOWNER = '/home/arducam/bin/wifiV1down.sh'
+msgGenerator = '/home/arducam/bin/msgGenerator.sh'
 
 checkMode = '/home/arducam/bin/checkMode.py' # Decides whether we are in COLLECT (1) or DOWNLOAD (0) mode
 checkUSBcopy = '/home/arducam/bin/checkUSBcopySpace.py' # Checks to see if sufficient space to copy to USB
