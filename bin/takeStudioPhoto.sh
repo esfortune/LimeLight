@@ -34,7 +34,8 @@ gpioset gpiochip0 $attractorOFF=0   # Set GPIO 16 to low (0V)
 # Sleep 4 seconds to ensure that the lights are stable
 sleep 4
 # Capture the photo
-libcamera-still -n --datetime
+libcamera-still -n --datetime --autofocus-range macro 
+
 
 # Log the capture
 filename=`ls -t *.jpg | head -1`

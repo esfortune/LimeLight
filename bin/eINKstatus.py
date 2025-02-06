@@ -34,9 +34,9 @@ diskPerCentRemaining = "Percent Free:  " + str(round((diskFree / diskTotal) * 10
 
 currentMode = subprocess.run([c.checkMode], capture_output=True, text=True)
 if currentMode.returncode == 1:
-    modeMSG = "Switch: Collection Mode"
+    modeMSG = "Collection Mode"
 if currentMode.returncode == 0:
-    modeMSG = "Switch: Download Mode"
+    modeMSG = "Download Mode"
 
 # Initialize display
 display = Adafruit_SSD1675(250, 122, spi, cs_pin=ecs_pin, dc_pin=dc_pin, sramcs_pin=None,
