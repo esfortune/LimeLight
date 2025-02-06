@@ -1,0 +1,9 @@
+From ChatGPT:
+
+/dev/sda1   /mnt/usb   vfat   defaults   0   0
+
+sudo apt update
+sudo apt install exfat-fuse exfat-utils
+
+/dev/sda1   /mnt/usb   exfat   defaults   0   0
+

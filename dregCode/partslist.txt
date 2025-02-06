@@ -1,0 +1,15 @@
+LED specifications for Gunnar Brehm LepiLED:
+
+########## 4x SSC Viosys UV CUN66A1B UV LEDs
+https://www.digikey.com/en/products/detail/seti-seoul-viosys/CUN66A1B/9997658 (365nM)
+https://www.digikey.com/en/products/detail/seti-seoul-viosys/CUN66B1B/9997669 (367nm)
+https://www.digikey.com/en/products/detail/seti-seoul-viosys/CUN9GB1A/9997709 (395nm)
+https://www.digikey.com/en/products/detail/seti-seoul-viosys/CUN0GB1A/9997668 (405nm)
+
+########## 2x Cree XP-E2 Royal Blue LEDs
+########## 1x Cree XP-E2 Green LED
+https://www.ledsupply.com/leds/cree-xlamp-xp-e2-color-high-power-led-star
+
+########## 1x Cree XP-L V6 Cool White LED
+https://www.ledsupply.com/leds/cree-xlamp-xp-l-high-density-led-star
+

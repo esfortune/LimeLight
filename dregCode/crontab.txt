@@ -1,0 +1,6 @@
+# Take a sample every 30 seconds (initiate every minute)
+# Edit second field to specify hours: Will typically need two entries for each,
+# 17-23 and 0-7 (5pm to midnight and midnight to 7am)
+# */1 * * * * /home/arducam/bin/dataCollection.py >> /home/arducam/data/curdat/errorlog.txt 2>&1
+# */1 * * * * sleep 30; /home/arducam/bin/dataCollection.py "NoAudio" >> /home/arducam/data/curdat/errorlog.txt 2>&1
+
