@@ -15,7 +15,7 @@ attractorOFF=6
 panelOFF=13
 
 
-echo "Turning Studio lights OFF and Attractor OFF"
+echo "Studio lights and Attractor lights OFF"
 gpioset gpiochip0 $panelOFF=1   # Set GPIO 12 to high (3.3V)
 gpioset gpiochip0 $attractorOFF=1   # Set GPIO 16 to low (0V)
 sleep 1

@@ -10,7 +10,6 @@ DIR="/home/arducam/data/curdat/Studio"
 # Check if the directory exists
 if [ ! -d "$DIR" ]; then
   # Directory doesn't exist, create it
-  echo "Directory $DIR does not exist. Creating it..."
   mkdir -p "$DIR"
 fi
 
@@ -24,7 +23,6 @@ panelOFF=6
 
 # Turn off attractor and turn on Studio lights
 
-echo "Turning Studio lights ON and Attractor OFF"
 gpioset gpiochip0 $panelON=1   # Set GPIO 12 to high (3.3V)
 gpioset gpiochip0 $attractorOFF=1   # Set GPIO 16 to low (0V)
 sleep 1
@@ -41,10 +39,10 @@ libcamera-still -n --datetime --autofocus-range macro
 filename=`ls -t *.jpg | head -1`
 serialNumber=`head -1 /home/arducam/serialNumber.txt`
 echo $serialNumber", studio, "$filename", OwlSight, 4624x3472" >> /home/arducam/data/curdat/dataLog.csv
+echo $serialNumber", studio, "$filename", OwlSight, 4624x3472" 
 
 # Sleep 2 second to ensure that everything is completed before switching.
 
-echo "Turning Studio lights OFF and Attractor ON"
 gpioset gpiochip0 $attractorON=1   # Set GPIO 16 to high (3.3V)
 gpioset gpiochip0 $panelOFF=1   # Set GPIO 12 to low (0V)
 sleep 1

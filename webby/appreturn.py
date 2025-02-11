@@ -6,7 +6,8 @@ app = Flask(__name__)
 SCRIPTS = {
     "script1": "/home/arducam/bin/eINKstatus.py",
     "script2": "/home/arducam/bin/wifiV1down.sh",
-    "script3": "/home/arducam/bin/echoecho.sh"
+    "script3": "/home/arducam/bin/allLEDsOFF.sh",
+    "script4": "/home/arducam/bin/takeStudioPhoto.sh"
 }
 
 @app.route("/")
@@ -27,6 +28,8 @@ def run_script():
         if script_name == "script2":
             result = subprocess.run(["/bin/bash", SCRIPTS[script_name]], capture_output=True, text=True, check=True)
         if script_name == "script3":
+            result = subprocess.run(["/bin/bash", SCRIPTS[script_name]], capture_output=True, text=True, check=True)
+        if script_name == "script4":
             result = subprocess.run(["/bin/bash", SCRIPTS[script_name]], capture_output=True, text=True, check=True)
         return jsonify({"status": "success", "output": result.stdout.strip()})
     except subprocess.CalledProcessError as e:
