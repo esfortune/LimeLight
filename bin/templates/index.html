@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MothPad 120308045</title>
+    <style>
+        body { text-align: center; font-family: Arial, sans-serif; font-size: 24px; }
+        .button {
+            font-size: 36px; padding: 15px 30px; margin: 20px;
+            background-color: green; border: none; color: white;
+            cursor: pointer; transition: 0.3s;
+        }
+        .active { background-color: red; }
+        .output { margin-top: 10px; font-size: 24px; color: black; }
+    </style>
+</head>
+<body>
+    <h1>MothPad 120308045</h1>
+    
+    <div>
+        <button class="button" id="script1" onclick="runScript('script1')">Get Device Info</button>
+        <p id="output-script1" class="output"></p>
+    </div>
+
+    <div>
+        <button class="button" id="script5" onclick="runScript('script5')">Show device date and time</button>
+        <p id="output-script5" class="output"></p>
+    </div>
+
+    <div>
+        <button class="button" id="script6" onclick="runScript('script6')">Show device Mode</button>
+        <p id="output-script6" class="output"></p>
+    </div>
+
+    <div>
+        <button class="button" id="script4" onclick="runScript('script4')">Take Studio Photo</button>
+        <p id="output-script4" class="output"></p>
+    </div>
+
+    <div>
+        <button class="button" id="script3" onclick="runScript('script3')">Turn off all LEDs</button>
+        <p id="output-script3" class="output"></p>
+    </div>
+
+    <div>
+	To set device date and time, enter in format shown in box and click button<p>
+        <input type="text" id="time-input" class="time-input" placeholder="11 FEB 2025 18:34:00">
+        <button class="button" onclick="setTime()">Set Local Date and Time</button>
+        <p id="time-output" class="output"></p>
+    </div>
+
+    <div>
+        <font color="orange">Turning Wifi off is not reversible, and you will lose access to this page.</font><p>
+        <button class="button" id="script2" onclick="runScript('script2')">Turn off Wifi</button>
+        <p id="output-script2" class="output"></p>
+    </div>
+
+<!--    <h2>Set System Time</h2>
+    <input type="text" id="time-input" class="time-input" placeholder="11 FEB 2025 18:34:00">
+    <button class="button" onclick="setTime()">Set Time</button>
+    <p id="time-output" class="output"></p>
+-->
+
+    <script>
+        function runScript(script) {
+            let button = document.getElementById(script);
+            let outputElement = document.getElementById("output-" + script);
+            
+            button.classList.add("active"); // Change color when pressed
+            outputElement.textContent = "Running..."; // Show running message
+
+            fetch("/run-script", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ script: script })
+            })
+            .then(response => response.json())
+            .then(data => {
+                outputElement.textContent = data.output || "No output";
+            })
+            .catch(() => {
+                outputElement.textContent = "Error running script";
+            });
+
+            // Reset button color after 2 seconds
+            setTimeout(() => {
+                button.classList.remove("active");
+            }, 2000);
+        }
+
+        function setTime() {
+            let timeInput = document.getElementById("time-input").value;
+            let outputElement = document.getElementById("time-output");
+
+            if (!timeInput.trim()) {
+                outputElement.textContent = "Please enter a valid date/time.";
+                return;
+            }
+
+            outputElement.textContent = "Setting time...";
+
+            fetch("/set-time", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ time: timeInput })
+            })
+            .then(response => response.json())
+            .then(data => {
+                outputElement.textContent = data.message;
+            })
+            .catch(() => {
+                outputElement.textContent = "Error setting time.";
+            });
+        }
+    </script>
+
+
+</body>
+</html>
+

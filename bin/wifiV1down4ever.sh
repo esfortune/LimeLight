@@ -2,7 +2,6 @@
 # Eric Fortune, Canopy Life, February 2024
 # Code written for Limelight Rainforest test device.
 
-
 sudo nmcli con down AccessPoint
 
 sleep 1
@@ -15,5 +14,6 @@ sleep 1
 
 sleep 1
 
-rm /home/arducam/wifiUP.txt
+# THE USER HAS STOPPED THE WIFI, so we don't want it to restart. Until reboot.
+#### rm /home/arducam/wifiUP.txt
 

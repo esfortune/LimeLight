@@ -12,9 +12,7 @@ nmcli con modify AccessPoint ipv6.method disabled
 
 sleep 1
 
-nmcli con up AccessPoint
-
-touch /home/arducam/wifiUP.txt
+sudo nmcli con up AccessPoint
 
 sleep 1
 
@@ -24,5 +22,8 @@ sleep 1
 
 /home/arducam/bin/dockerDUFS.sh
 
+sleep 1
+
+touch /home/arducam/wifiUP.txt
 
 # nmcli con down AccessPoint

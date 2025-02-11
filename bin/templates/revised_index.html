@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Run Scripts</title>
+    <style>
+        body { text-align: center; font-family: Arial, sans-serif; }
+        .button {
+            font-size: 24px; padding: 15px 30px; margin: 20px;
+            background-color: grey; border: none; color: white;
+            cursor: pointer; transition: 0.3s;
+        }
+        .success { background-color: green; }
+        .failure { background-color: red; }
+    </style>
+</head>
+<body>
+    <h1>Run Python Scripts</h1>
+    <button class="button" id="script1" onclick="runScript('script1')">Run Script 1</button>
+    <button class="button" id="script2" onclick="runScript('script2')">Run Script 2</button>
+    <button class="button" id="script3" onclick="runScript('script3')">Run Script 3</button>
+
+    <script>
+        function runScript(script) {
+            let button = document.getElementById(script);
+            button.style.backgroundColor = "grey";  // Reset to default before execution
+
+            fetch("/run-script", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ script: script })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === "success") {
+                    button.classList.remove("failure");
+                    button.classList.add("success");
+                } else {
+                    button.classList.remove("success");
+                    button.classList.add("failure");
+                }
+            })
+            .catch(() => {
+                button.classList.remove("success");
+                button.classList.add("failure");
+            });
+        }
+    </script>
+</body>
+</html>
+

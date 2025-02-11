@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Run Scripts</title>
+    <style>
+        body { text-align: center; font-family: Arial, sans-serif; }
+        .button {
+            font-size: 24px; padding: 15px 30px; margin: 20px;
+            background-color: grey; border: none; color: white;
+            cursor: pointer; transition: 0.3s;
+        }
+        .active { background-color: blue; } /* Button turns blue when pressed */
+    </style>
+</head>
+<body>
+    <h1>Run Shell Scripts</h1>
+    <button class="button" id="script1" onclick="runScript('script1')">Run Script 1</button>
+    <button class="button" id="script2" onclick="runScript('script2')">Run Script 2</button>
+    <button class="button" id="script3" onclick="runScript('script3')">Run Script 3</button>
+
+    <script>
+        function runScript(script) {
+            let button = document.getElementById(script);
+            button.classList.add("active"); // Change color when pressed
+
+            fetch("/run-script", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ script: script })
+            });
+
+            // Reset button color after 5 seconds
+            setTimeout(() => {
+                button.classList.remove("active");
+            }, 5000);
+        }
+    </script>
+</body>
+</html>
+

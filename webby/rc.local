@@ -1,0 +1,8 @@
+#!/bin/sh
+
+touch /home/arducam/wifiUP.txt
+sleep 1
+rm /home/arducam/wifiUP.txt
+echo "Cleanup of wifi tracking file."
+
+exit 0
