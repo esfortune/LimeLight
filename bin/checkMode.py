@@ -22,8 +22,8 @@ def is_button_pressed():
 # Print the result
 if __name__ == "__main__":
     if is_button_pressed():
-        print(f'Button is pressed: 0 Download')
+        print(f'Download Mode')
         exit(0)
     else:
-        print(f'Button is not pressed: 1 Collect')
+        print(f'Collection Mode')
         exit(1)

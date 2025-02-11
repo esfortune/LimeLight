@@ -7,7 +7,9 @@ SCRIPTS = {
     "script1": "/home/arducam/bin/eINKstatus.py",
     "script2": "/home/arducam/bin/wifiV1down.sh",
     "script3": "/home/arducam/bin/allLEDsOFF.sh",
-    "script4": "/home/arducam/bin/takeStudioPhoto.sh"
+    "script4": "/home/arducam/bin/takeStudioPhoto.sh",
+    "script5": "/home/arducam/bin/msgDate.sh",
+    "script6": "/home/arducam/bin/checkMode.py"
 }
 
 @app.route("/")
@@ -23,15 +25,12 @@ def run_script():
         return jsonify({"status": "error", "message": "Invalid script"}), 400
 
     try:
-        if script_name == "script1":
-            result = subprocess.run("/home/arducam/bin/eINKstatus.py", capture_output=True, text=True, check=True)
-        if script_name == "script2":
-            result = subprocess.run(["/bin/bash", SCRIPTS[script_name]], capture_output=True, text=True, check=True)
-        if script_name == "script3":
-            result = subprocess.run(["/bin/bash", SCRIPTS[script_name]], capture_output=True, text=True, check=True)
-        if script_name == "script4":
+        if (script_name == "script1" or script_name == "script6"):
+            result = subprocess.run(SCRIPTS[script_name], capture_output=True, text=True, check=True)
+        else:
             result = subprocess.run(["/bin/bash", SCRIPTS[script_name]], capture_output=True, text=True, check=True)
         return jsonify({"status": "success", "output": result.stdout.strip()})
+
     except subprocess.CalledProcessError as e:
         return jsonify({"status": "failure", "output": e.stderr.strip()})
 

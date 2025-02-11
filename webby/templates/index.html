@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>MothPad 117722760</title>
+    <title>MothPad 120308045</title>
     <style>
-        body { text-align: center; font-family: Arial, sans-serif; }
+        body { text-align: center; font-family: Arial, sans-serif; font-size: 24px; }
         .button {
-            font-size: 24px; padding: 15px 30px; margin: 20px;
-            background-color: grey; border: none; color: white;
+            font-size: 36px; padding: 15px 30px; margin: 20px;
+            background-color: green; border: none; color: white;
             cursor: pointer; transition: 0.3s;
         }
-        .active { background-color: blue; }
-        .output { margin-top: 10px; font-size: 18px; color: black; }
+        .active { background-color: red; }
+        .output { margin-top: 10px; font-size: 24px; color: black; }
     </style>
 </head>
 <body>
-    <h1>MothPad 117722760</h1>
+    <h1>MothPad 120308045</h1>
     
     <div>
         <button class="button" id="script1" onclick="runScript('script1')">Get Device Info</button>
@@ -22,17 +22,32 @@
     </div>
 
     <div>
-        <button class="button" id="script2" onclick="runScript('script2')">Turn off Wifi</button>
-        <p id="output-script2" class="output"></p>
+        <button class="button" id="script5" onclick="runScript('script5')">Show device date and time</button>
+        <p id="output-script5" class="output"></p>
+    </div>
+
+    <div>
+        <button class="button" id="script6" onclick="runScript('script6')">Show device Mode</button>
+        <p id="output-script6" class="output"></p>
+    </div>
+
+    <div>
+        <button class="button" id="script4" onclick="runScript('script4')">Take Studio Photo</button>
+        <p id="output-script4" class="output"></p>
     </div>
 
     <div>
         <button class="button" id="script3" onclick="runScript('script3')">Turn off all LEDs</button>
         <p id="output-script3" class="output"></p>
     </div>
+
     <div>
-        <button class="button" id="script4" onclick="runScript('script4')">Take Studio Photo</button>
-        <p id="output-script4" class="output"></p>
+        <font color="orange">Turning Wifi off is not reversible, and you will lose access to this page.</font><p>
+    </div>
+
+    <div>
+        <button class="button" id="script2" onclick="runScript('script2')">Turn off Wifi</button>
+        <p id="output-script2" class="output"></p>
     </div>
 
     <script>
@@ -56,10 +71,10 @@
                 outputElement.textContent = "Error running script";
             });
 
-            // Reset button color after 5 seconds
+            // Reset button color after 2 seconds
             setTimeout(() => {
                 button.classList.remove("active");
-            }, 5000);
+            }, 2000);
         }
     </script>
 </body>
