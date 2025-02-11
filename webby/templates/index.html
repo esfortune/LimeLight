@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MothPad 117722760</title>
+    <style>
+        body { text-align: center; font-family: Arial, sans-serif; }
+        .button {
+            font-size: 24px; padding: 15px 30px; margin: 20px;
+            background-color: grey; border: none; color: white;
+            cursor: pointer; transition: 0.3s;
+        }
+        .active { background-color: blue; }
+        .output { margin-top: 10px; font-size: 18px; color: black; }
+    </style>
+</head>
+<body>
+    <h1>MothPad 117722760</h1>
+    
+    <div>
+        <button class="button" id="script1" onclick="runScript('script1')">Get Device Info</button>
+        <p id="output-script1" class="output"></p>
+    </div>
+
+    <div>
+        <button class="button" id="script2" onclick="runScript('script2')">Turn off Wifi</button>
+        <p id="output-script2" class="output"></p>
+    </div>
+
+    <div>
+        <button class="button" id="script3" onclick="runScript('script3')">Echo!</button>
+        <p id="output-script3" class="output"></p>
+    </div>
+
+    <script>
+        function runScript(script) {
+            let button = document.getElementById(script);
+            let outputElement = document.getElementById("output-" + script);
+            
+            button.classList.add("active"); // Change color when pressed
+            outputElement.textContent = "Running..."; // Show running message
+
+            fetch("/run-script", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ script: script })
+            })
+            .then(response => response.json())
+            .then(data => {
+                outputElement.textContent = data.output || "No output";
+            })
+            .catch(() => {
+                outputElement.textContent = "Error running script";
+            });
+
+            // Reset button color after 5 seconds
+            setTimeout(() => {
+                button.classList.remove("active");
+            }, 5000);
+        }
+    </script>
+</body>
+</html>
+

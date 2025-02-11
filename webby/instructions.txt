@@ -1,0 +1,8 @@
+Set up the button web server
+
+python -m venv webby
+cd webby
+bin/pip install flask
+
+copy the python script (app*.py) to webby
+copy the templates directory to webby
