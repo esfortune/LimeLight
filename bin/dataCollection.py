@@ -1,5 +1,5 @@
 #!/usr/bin/python
-# Eric Fortune, Canopy Life, December 2024 
+# Eric Fortune, Canopy Life, February 2024 
 # Code written for Limelight Rainforest test device.
 #
 # This script checks the Mode: 1-collection or 0-download
@@ -42,7 +42,7 @@ takeEnvironment = c.data_environmental
 takeGPS = c.data_gps
 takeStudio = c.data_studio
 
-# WiFi business
+# WiFi business   ####### THIS MAY BE SUBJECT TO CHANGE
 wifiUP = c.wifiUPPER
 wifiDN = c.wifiDOWNER
 # we also use c.wifiPathName
@@ -105,9 +105,17 @@ if currentMode.returncode == 1:
         ledBlink = subprocess.Popen([statusLED, '5'])
         exit(0)
 
+    ########## MANAGING THE WIFI IS LIKELY TO CHANGE
+    ########## FEB 11, 2025: rc.local removes the wifiUP.txt file
+    ########## Both collection and download modes check to start WiFi
     # If the WiFi is on, turn it off (saves power during data collection mode)
-    if ISwifiUP():
-        subprocess.run([wifiDN])
+    #if ISwifiUP():
+    #    subprocess.run([wifiDN])
+    ##### WE USED TO DO THIS AUTOMATICALLY.  NOW WE WAIT FOR THE USER TO DO IT.
+    # Turn on the WiFi if it isn't already up
+    if not ISwifiUP():
+        subprocess.run([wifiUP])
+
        
 
 ########################################## 
