@@ -48,7 +48,7 @@ def run_script():
     try:
         # PYTHON SCRIPTS
         if (script_name == "script1" or script_name == "script6"):
-            result = subprocess.run(SCRIPTS[script_name], capture_output=True, text=True, check=True)
+            result = subprocess.run(SCRIPTS[script_name], capture_output=True, text=True)
         # SHELL SCRIPTS (BASH)
         else:
             result = subprocess.run(["/bin/bash", SCRIPTS[script_name]], capture_output=True, text=True, check=True)
