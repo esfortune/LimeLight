@@ -16,7 +16,7 @@ sudo nmcli con up AccessPoint
 
 sleep 1
 
-/home/arducam/bin/webInterface.py &
+# /home/arducam/bin/webInterface.py &
 
 sleep 1
 
