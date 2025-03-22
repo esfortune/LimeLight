@@ -5,6 +5,6 @@ sleep 1
 rm /home/arducam/wifiUP.txt
 echo "Cleanup of wifi tracking file."
 
-/home/arducam/bin/webInterface.py &
+nohup /home/arducam/bin/webInterface.py >> /home/arducam/weblog.txt 2>&1 
 
 exit 0
