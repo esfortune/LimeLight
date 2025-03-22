@@ -23,11 +23,11 @@ app = Flask(__name__)
 # Each of the scripts must be listed here. Python scripts are handled differently below.
 SCRIPTS = {
     "script1": "/home/arducam/bin/eINKstatus.py",
-    "script2": "/home/arducam/bin/wifiV1down.sh",
+    "script2": "/home/arducam/bin/wifiV1down4ever.sh",
     "script3": "/home/arducam/bin/allLEDsOFF.sh",
     "script4": "/home/arducam/bin/takeStudioPhoto.sh",
     "script5": "/home/arducam/bin/msgDate.sh",
-    "script6": "/home/arducam/bin/checkMode.py"
+    "script6": "/home/arducam/bin/checkMode.py",
 }
 
 # THIS IS OUR WEBPAGE, found in the "templates" directory
@@ -48,7 +48,9 @@ def run_script():
     try:
         # PYTHON SCRIPTS
         if (script_name == "script1" or script_name == "script6"):
-            result = subprocess.run(SCRIPTS[script_name], capture_output=True, text=True)
+            result = subprocess.run(SCRIPTS[script_name], capture_output=True, text=True, check=True)
+        elif (script_name == "script7"):
+            subprocess.run(["/bin/bash", "sudo", "/sbin/shutdown", "-h", "now"])
         # SHELL SCRIPTS (BASH)
         else:
             result = subprocess.run(["/bin/bash", SCRIPTS[script_name]], capture_output=True, text=True, check=True)
