@@ -49,8 +49,7 @@ def run_script():
         # PYTHON SCRIPTS
         if (script_name == "script1" or script_name == "script6"):
             result = subprocess.run(SCRIPTS[script_name], capture_output=True, text=True, check=True)
-        elif (script_name == "script7"):
-            subprocess.run(["/bin/bash", "sudo", "/sbin/shutdown", "-h", "now"])
+
         # SHELL SCRIPTS (BASH)
         else:
             result = subprocess.run(["/bin/bash", SCRIPTS[script_name]], capture_output=True, text=True, check=True)
