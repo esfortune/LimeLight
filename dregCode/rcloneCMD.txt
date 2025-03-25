@@ -1,0 +1,6 @@
+
+
+nohup rclone copy /home/arducam/data/Jotta/03-24-2025 CanopyLife:MothPadData/120308045/03242025 &
+
+nohup rclone copy /home/arducam/data/Jotta/03-24-2025 CanopyLife:MothPadData/117608014/03242025 &
+
