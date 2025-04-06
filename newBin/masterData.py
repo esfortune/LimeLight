@@ -55,6 +55,21 @@ wifiDN = c.wifiDOWNER
 # we also use c.wifiPathName
 
 ####################################################################
+### Check to see which mode: FullService (1) or PowerSaver (0)
+
+currentMode = subprocess.run([checkMode], capture_output=True, text=True)
+
+if currentMode == 1:           # Full services requested
+    systemServices up
+
+if currentMode == 0: .         # Power Saver Mode
+    systemServices Down
+
+    if not ISwifiUP():
+        subprocess.run(["sudo", wifiUP])
+
+
+####################################################################
 # The user can override data defaults via command-line arguments.
 # As of April 2025 we default to NO DATA streams in config.py.
 # FUTURE: add error checking for the command line arguments.
@@ -77,54 +92,12 @@ if len(sys.argv) > 1:
     if "NoEnv" in sys.argv: 
         takeEnvironment = 0
 
-####################################################################
-# Our functions
-
-### Check to see if the WiFi is up or down (cheesy)
-def ISwifiUP():
-    return os.path.exists(c.wifiPathName)
-
 
 ####################################################################
-### Check to see which mode: FullService (1) or PowerSaver (0)
-currentMode = subprocess.run([checkMode], capture_output=True, text=True)
+# Finally, DATA COLLECTION 
 
 
-####################################################################
-# DATA COLLECTION MODE
-# When the pin is pulled up (released), run the shell script(s)
-
-if currentMode.returncode == 1:
-    print(f"DATA COLLECTION MODE")
-
-    # If the backup was just completed, refresh the eINK screen for good measure.
-    if not checkAlreadyCopied():
-        subprocess.run([eINKupdate], check=True)
-
-    # If data download mode exits uncleanly and leaves the tracking file, which is a common outcome,
-    # then we won't be able to backup. So the user just needs to put it into
-    # collection mode and this routine will remove the tracking file that prevents double copying.
-    if check_file_exists():
-        print(f'{file2CheckPathName} exists, but we are in data collection mode. DELETE!')
-        os.remove(file2CheckPathName)
-        ledBlink = subprocess.Popen([statusLED, '5'])
-        exit(0)
-
-    ########## MANAGING THE WIFI IS LIKELY TO CHANGE
-    ########## FEB 11, 2025: rc.local removes the wifiUP.txt file
-    ########## Both collection and download modes check to start WiFi
-    # If the WiFi is on, turn it off (saves power during data collection mode)
-    #if ISwifiUP():
-    #    subprocess.run([wifiDN])
-    ##### WE USED TO DO THIS AUTOMATICALLY.  NOW WE WAIT FOR THE USER TO DO IT.
-    # Turn on the WiFi if it isn't already up
-    if not ISwifiUP():
-        subprocess.run(["sudo", wifiUP])
-
-       
-
-########################################## 
-# Collect the datums
+if check_file_exists():
 
     if takeGPS == 1:
         try:
@@ -155,29 +128,6 @@ if currentMode.returncode == 1:
             print(f"Error running script: {ea}")
 
 
-####################################################################
-# DATA DOWNLOAD MODE
-
-if currentMode.returncode == 0:
-    print(f"DATA DOWNLOAD MODE")
-
-    # Update the text message for the WiFi users
-    subprocess.run([c.msgGenerator], check=True) 
-
-    # Turn on the WiFi if it isn't already up
-    if not ISwifiUP():
-        subprocess.run(["sudo", wifiUP])
-
-    # This code is routinely called by crontab while another instance is running.
-    # We don't want to run a second consecutive instance, so exit cleanly.
-    # Also checks to see if we have already backed up - don't run again!
-    if check_file_exists():
-        print(f'Copying already in process.')
         ledBlink = subprocess.Popen([statusLED, '4'])
-        exit(0)
-
-    # If this file is missing, it means that we haven't had any new data 
-    if not checkAlreadyCopied():
-        print(f'Copying already completed.')
         exit(0)
 
