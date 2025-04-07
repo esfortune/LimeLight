@@ -1,6 +1,13 @@
-
+120308045
 
 nohup rclone copy /home/arducam/data/Jotta/03-24-2025 CanopyLife:MothPadData/120308045/03242025 &
 
+nohup rclone copy CanopyLife:MothPadData/120308045/03242025 /Volumes/SabrentLime/Yanayacu2025/120308045/03-24-2025 &
+
+
+117608014
+
 nohup rclone copy /home/arducam/data/Jotta/03-24-2025 CanopyLife:MothPadData/117608014/03242025 &
+
+nohup rclone copy CanopyLife:MothPadData/117608014/03242025 /Volumes/SabrentLime/Yanayacu2025/117608014/03-24-2025 &
 
