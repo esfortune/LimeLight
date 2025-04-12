@@ -4,5 +4,7 @@ python -m venv webby
 cd webby
 bin/pip install flask
 
+pip install waitress
+
 copy the python script (app*.py) to webby
 copy the templates directory to webby
