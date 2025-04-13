@@ -6,7 +6,7 @@
 mkdir -p smaller
 
 ## Parallel processing method (this uses 8 cores)
-parallel -j 8 'djpeg -scale 1/8 {} > smaller/{/.}.pnm' ::: *.jpg
+parallel -j 4 'djpeg -scale 1/8 {} > smaller/{/.}.pnm' ::: *.jpg
 
 ## Loop through all jpg images in the current directory, one process at a time
 #for img in *.jpg; do
