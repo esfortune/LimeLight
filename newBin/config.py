@@ -13,6 +13,21 @@ except FileNotFoundError:
     # If the file does not exist, use a default serial number
     deviceSerial = "001100110"
 
+try:
+    with open("/home/arducam/location.txt", "r") as file:
+        deviceLocation = file.readline().strip()
+except FileNotFoundError:
+    # If the file does not exist, use a default location
+    deviceLocation = "LocationIsNotSet"
+
+try:
+    with open("/home/arducam/GPS.txt", "r") as file:
+        deviceGPS = file.readline().strip()
+except FileNotFoundError:
+    # If the file does not exist, use a default location
+    deviceGPS = "00d 00m S 00d 00m W"
+
+
 ### Paths
 
 base_path = '/home/arducam'

@@ -59,10 +59,10 @@ wifiDN = c.wifiDOWNER
 
 currentMode = subprocess.run([checkMode], capture_output=True, text=True)
 
-if currentMode == 1:           # Full services requested
+if currentMode.returncode == 1:           # Full services requested
     systemServices up
 
-if currentMode == 0: .         # Power Saver Mode
+if currentMode.returncode == 0:          # Power Saver Mode
     systemServices Down
 
     if not ISwifiUP():
