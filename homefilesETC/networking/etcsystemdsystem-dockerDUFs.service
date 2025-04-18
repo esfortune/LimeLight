@@ -1,0 +1,13 @@
+[Unit]
+Description=Start Docker DUFS if GPIO 23 is HIGH
+After=network.target docker.service
+Requires=docker.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/dockerDUFs.sh
+RemainAfterExit=true
+
+[Install]
+WantedBy=multi-user.target
+

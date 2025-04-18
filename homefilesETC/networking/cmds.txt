@@ -12,5 +12,16 @@ sudo systemctl enable dualWifi.service
 sudo cp etcsystemdsystem-startFlask.service /etc/systemd/system/startFlask.service
 sudo cp usrlocalbin-startFlask.sh /usr/local/bin/startFlask.sh
 
+sudo systemctl daemon-reload
+sudo systemctl enable startFlask.service
+sudo systemctl start startFlask.service
 
 sudo systemctl restart startFlask.service
+
+
+sudo cp usrlocalbin-dockerDUFs.sh /usr/local/bin/dockerDUFs.sh
+sudo cp etcsystemdsystem-dockerDUFs.service /etc/systemd/system/dockerDUFs.service
+
+sudo systemctl daemon-reload
+sudo systemctl enable dockerDUFs.service
+
