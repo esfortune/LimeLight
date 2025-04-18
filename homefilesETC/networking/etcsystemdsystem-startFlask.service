@@ -1,0 +1,15 @@
+[Unit]
+Description=Start Flask web interface 
+After=network-online.target
+Requires=network-online.target
+
+[Service]
+ExecStart=/usr/local/bin/startFlask.sh
+Restart=on-failure
+User=arducam
+WorkingDirectory=/home/arducam/bin
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

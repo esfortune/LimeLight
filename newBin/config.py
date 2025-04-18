@@ -21,7 +21,7 @@ except FileNotFoundError:
     deviceLocation = "LocationIsNotSet"
 
 try:
-    with open("/home/arducam/GPS.txt", "r") as file:
+    with open("/home/arducam/gps.txt", "r") as file:
         deviceGPS = file.readline().strip()
 except FileNotFoundError:
     # If the file does not exist, use a default location

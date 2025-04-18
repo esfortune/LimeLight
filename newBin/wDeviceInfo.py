@@ -21,9 +21,9 @@ printTime = "Device Time: " + timestamp + "\n"
 
 diskTotal, diskUsed, diskFree = shutil.disk_usage("/")
 
-diskUsage = str(round(diskTotal / (1024**3))) + "Gb space - " + str(round(diskUsed / (1024**3))) + "Gb used = " + str(round(diskFree / (1024**3))) + "Gb available."
+diskUsage = str(round(diskTotal / (1024**3))) + "Gb, " + str(round(diskUsed / (1024**3))) + "Gb, " + str(round(diskFree / (1024**3))) + "Gb"
 
-diskPerCentRemaining = "Percent Free: " + str(round((diskFree / diskTotal) * 100)) + "%"
+diskPerCentRemaining = "Percent Free:  " + str(round((diskFree / diskTotal) * 100)) + " %"
 
 currentMode = subprocess.run([c.checkMode], capture_output=True, text=True)
 if currentMode.returncode == 1:
@@ -35,10 +35,9 @@ ledBlink = subprocess.Popen([statusLED, '2'])
 
 print(f"{deviceSerial}, {deviceLocation}, {deviceGPS}")
 print(f"{printTime}")
-print(f"{diskUsage} {diskPerCentRemaining}")
+print(f"{diskUsage}, {diskPerCentRemaining}")
 
-time.sleep(2)
+time.sleep(5)
 
 ledBlink.kill()
 ledBlink = subprocess.Popen([statusLED, '6'])
-

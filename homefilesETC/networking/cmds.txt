@@ -1,0 +1,16 @@
+
+
+
+sudo cp usrlocalbin-dualWifi.sh /usr/local/bin/dualWifi.sh
+sudo cp etcsystemdsystem-dualWifi.service /etc/systemd/system/dualWifi.service
+
+sudo systemctl daemon-reexec
+sudo systemctl daemon-reload
+sudo systemctl enable dualWifi.service
+
+
+sudo cp etcsystemdsystem-startFlask.service /etc/systemd/system/startFlask.service
+sudo cp usrlocalbin-startFlask.sh /usr/local/bin/startFlask.sh
+
+
+sudo systemctl restart startFlask.service

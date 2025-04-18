@@ -1,6 +1,6 @@
-#!/home/arducam/webby/bin/python3
+#!/home/arducam/PyEnvs/webby/bin/python3
 ####!/Users/eric/NotCloudy/PyEnvs/webby/bin/python3
-# Eric Fortune, Canopy Life, February 2024
+# Eric Fortune, Canopy Life, February 2025
 # Code written for Limelight Rainforest test device.
 # This provides a web interface for users to check and manipulate
 # the device before deployment.
@@ -8,21 +8,23 @@
 # Track the PID so that we can kill the process when needed.
 import os
 import sys
+import re
+import traceback
 
-# PID_FILE = "/Users/eric/NotCloudy/PyEnvs/webby/wifiUP.txt"  # Path to store the PID
 PID_FILE = "/home/arducam/wifiUP.txt"  # Path to store the PID
+
+BASICS_FILE = os.path.expanduser("/home/arducam/cronbasics.txt")
+CRON_COMMANDS = {'studio': '/home/arducam/bin/takeStudioPhoto.sh', 'audio': '/home/arducam/bin/takeAudio.sh'}
 
 # Save the current process PID
 with open(PID_FILE, "w") as f:
     f.write(str(os.getpid()))
 
-# We are running the web interface via FLASK
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, redirect, url_for
 import subprocess
 
 app = Flask(__name__)
 
-# Each of the scripts must be listed here. Python scripts are handled differently below.
 SCRIPTS = {
     "script-devinfo": "/home/arducam/bin/wDeviceInfo.py",
     "script2": "/home/arducam/bin/wifiV1down4ever.sh",
@@ -32,16 +34,81 @@ SCRIPTS = {
     "script6": "/home/arducam/bin/checkMode.py"
 }
 
-# THIS IS OUR WEBPAGE, found in the "templates" directory
 @app.route("/")
 def index():
     return render_template("index.html")
-@app.route("/foobaroo")
-def foobaroo():
-    return render_template("foobaroo.html")
+
+@app.route("/crontab")
+def crontab():
+    return render_template("crontab.html")
+
+@app.route('/set-crontab', methods=['POST'])
+def set_crontab():
+    try:
+        data = request.get_json()
+        cron_lines = []
+
+        # Load baseline lines from cronbasics.txt
+        if os.path.exists(BASICS_FILE):
+            with open(BASICS_FILE, 'r') as f:
+                cron_lines.extend(line.strip() for line in f if line.strip())
+
+        for task in ['studio', 'audio']:
+            if not data.get(f'{task}_enabled'):
+                continue
+
+            cmd = CRON_COMMANDS[task]
+            mode = data.get(f'{task}_mode')
+
+            if mode == 'everyday':
+                s = data[f'{task}_everyday']
+                interval = int(s['interval'])
+                start = int(s['start'])
+                end = s['end']
+
+                if str(end).startswith('next-'):
+                    # Split into two crontab lines
+                    actual_end = int(end.replace('next-', ''))
+                    cron_lines.append(f"*/{interval} {start}-23 * * * {cmd}")
+                    cron_lines.append(f"*/{interval} 0-{actual_end} * * * {cmd}")
+                else:
+                    cron_lines.append(f"*/{interval} {start}-{int(end)} * * * {cmd}")
+
+            elif mode == 'custom':
+                for day, vals in data[f'{task}_custom'].items():
+                    interval = int(vals['interval'])
+                    start = int(vals['start'])
+                    end = vals['end']
+
+                    if str(end).startswith('next-'):
+                        actual_end = int(end.replace('next-', ''))
+                        cron_lines.append(f"*/{interval} {start}-23 * * {day} {cmd}")
+                        cron_lines.append(f"*/{interval} 0-{actual_end} * * {str((int(day)+1)%7)} {cmd}")
+                    else:
+                        cron_lines.append(f"*/{interval} {start}-{int(end)} * * {day} {cmd}")
+
+        # Write to temp file and install crontab
+        cron_text = "\n".join(cron_lines) + "\n"
+        with open("/tmp/new_cron", "w") as f:
+            f.write(cron_text)
+
+        subprocess.run(["crontab", "/tmp/new_cron"], check=True)
+        return "Crontab updated successfully."
+
+    except Exception as e:
+        print("Exception occurred:", e)
+        traceback.print_exc()
+        return "Failed to update crontab", 500
+
+@app.route('/get-crontab', methods=['GET'])
+def get_crontab():
+    try:
+        result = subprocess.run(['crontab', '-l'], capture_output=True, text=True, check=True)
+        return jsonify({"status": "success", "crontab": result.stdout})
+    except subprocess.CalledProcessError as e:
+        return jsonify({"status": "failure", "crontab": e.stderr.strip()}), 500
 
 
-# Running SCRIPTS
 @app.route("/run-script", methods=["POST"])
 def run_script():
     data = request.json
@@ -51,11 +118,8 @@ def run_script():
         return jsonify({"status": "error", "message": "Invalid script"}), 400
 
     try:
-        # PYTHON SCRIPTS
-        if (script_name == "script-devinfo" or script_name == "script6"):
+        if script_name in ["script-devinfo", "script6"]:
             result = subprocess.run(SCRIPTS[script_name], capture_output=True, text=True, check=True)
-
-        # SHELL SCRIPTS (BASH)
         else:
             result = subprocess.run(["/bin/bash", SCRIPTS[script_name]], capture_output=True, text=True, check=True)
         return jsonify({"status": "success", "output": result.stdout.strip()})
@@ -63,8 +127,6 @@ def run_script():
     except subprocess.CalledProcessError as e:
         return jsonify({"status": "failure", "output": e.stderr.strip()})
 
-
-# Setting System Time
 @app.route("/set-time", methods=["POST"])
 def set_time():
     data = request.json
@@ -79,9 +141,114 @@ def set_time():
     except subprocess.CalledProcessError as e:
         return jsonify({"status": "failure", "message": e.stderr.strip()}), 500
 
-# We are currently running this on port 5001
+@app.route('/set-location', methods=['POST'])
+def set_location():
+    data = request.get_json()
+    location = data.get('location', '')
+
+    if not re.match(r'^[\w\-]+$', location):
+        return 'Invalid input: only letters, numbers, dashes, and underscores allowed.', 400
+
+    location_file = os.path.expanduser('~/location.txt')
+    try:
+        with open(location_file, 'w') as f:
+            f.write(location)
+        return f'Location "{location}" saved.'
+    except Exception as e:
+        return f'Failed to save location: {e}', 500
+
+@app.route('/set-gps', methods=['POST'])
+def set_gps():
+    data = request.get_json()
+    gps = data.get('gps', '')
+
+    if not re.match(r'^[a-zA-Z0-9,\s.]+$', gps):
+        return 'Invalid input: only letters, numbers, dashes, underscores, commas, and periods allowed.', 400
+
+    gps_file = os.path.expanduser('~/gps.txt')
+    try:
+        with open(gps_file, 'w') as f:
+            f.write(gps)
+        return f'GPS coordinates "{gps}" saved.'
+    except Exception as e:
+        return f'Failed to save gps: {e}', 500
+
+
+def scan_wifi_networks():
+    try:
+        output = subprocess.check_output(['nmcli', '-t', '-f', 'SSID', 'dev', 'wifi']).decode()
+        ssids = sorted(set(filter(None, output.strip().split('\n'))))  # Remove empty and duplicates
+        return ssids
+    except subprocess.CalledProcessError:
+        return []
+
+def get_connection_status():
+    try:
+        output = subprocess.check_output(['nmcli', '-t', '-f', 'DEVICE,STATE,CONNECTION', 'dev']).decode()
+        for line in output.strip().splitlines():
+            parts = line.strip().split(':')
+            if parts[0] == 'wlan0' and parts[1] == 'connected':
+                return f"Connected to {parts[2]}"
+        return "Not connected"
+    except:
+        return "Unknown"
+
+@app.route("/wifi")
+def wifi():
+    ssids = scan_wifi_networks()
+    status = get_connection_status()
+    return render_template('wifi.html', ssids=ssids, status=status)
+
+@app.route('/connect', methods=['POST'])
+def connect():
+    data = request.get_json()
+    ssid = data.get('ssid')
+    password = data.get('password', '')
+
+    if not ssid:
+        return jsonify({"status": "failure", "message": "SSID is required."}), 400
+
+    try:
+        # Bring down the hotspot if it's running
+        subprocess.call(['nmcli', 'con', 'down', 'hotspot'])
+
+        # Delete existing connection with same name (if it exists)
+        subprocess.call(['nmcli', 'con', 'delete', ssid])
+
+        # Add the new connection
+        subprocess.run([
+            'nmcli', 'con', 'add',
+            'type', 'wifi',
+            'ifname', 'wlan0',
+            'con-name', ssid,
+            'ssid', ssid
+        ], check=True)
+
+        # Add password settings
+        subprocess.run([
+            'nmcli', 'con', 'modify', ssid,
+            'wifi-sec.key-mgmt', 'wpa-psk',
+            'wifi-sec.psk', password
+        ], check=True)
+
+        # Try to bring up the connection
+        subprocess.run(['nmcli', 'con', 'up', ssid], check=True)
+
+        return jsonify({"status": "success", "message": f"Connected to {ssid}."})
+
+    except subprocess.CalledProcessError as e:
+        return jsonify({
+            "status": "failure",
+            "message": f"Connection error: {e.stderr.strip() if e.stderr else str(e)}"
+        }), 500
+    except Exception as e:
+        return jsonify({
+            "status": "failure",
+            "message": f"Unexpected error: {str(e)}"
+        }), 500
+
+
 if __name__ == "__main__":
     from waitress import serve
-#    serve(app, host="0.0.0.0", port=5001)
-    app.run(host="0.0.0.0", port=5001)
+    serve(app, host="0.0.0.0", port=5001)
 

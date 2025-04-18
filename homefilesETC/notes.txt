@@ -1,0 +1,89 @@
+# local display on RPi HDMI in an ssh shell
+sudo fbi --autozoom --noverbose --vt 1 test.png
+
+# Ghost monitor adaptor
+https://forums.raspberrypi.com/viewtopic.php?t=294588
+
+INSTALL DOCKER 
+
+curl -sSL https://get.docker.com | sh
+sudo docker pull gristlabs/grist
+
+HOTSPOT SETUP
+
+https://raspberrytips.com/access-point-setup-raspberry-pi/
+
+sudo nmcli con add con-name hotspot ifname wlan0 type wifi ssid "Waponi"
+
+sudo nmcli con modify hotspot wifi-sec.key-mgmt wpa-psk
+sudo nmcli con modify hotspot wifi-sec.psk "raspberry"
+
+sudo nmcli con modify hotspot 802-11-wireless.mode ap 802-11-wireless.band bg ipv4.method shared
+
+DUFS WEB INTERFACE
+
+sudo docker pull sigoden/dufs
+mkdir ~/data
+sudo docker run -v /home/arducam/data:/data -p 5000:5000 --rm sigoden/dufs /data -A
+
+Install eINK display
+
+python3 -m venv eINK
+cd eINK
+bin/pip3 install pillow
+bin/pip3 install adafruit-circuitpython-epd
+bin/pip3 install Adafruit-Blinka
+bin/pip3 install rpi-lgpio
+
+Install NeoPixel control
+
+python3 -m venv neopixel
+cd neopixel
+bin/pip3 install adafruit-circuitpython-neopixel 
+bin/pip3 install adafruit_circuitpython_neopixel_spi
+
+Install Stemma sensors
+
+python3 -m venv Stemma
+cd Stemma
+bin/pip3 install adafruit_bme280
+bin/pip3 install adafruit_circuitpython_mpu6050
+
+
+
+
+GPS HAT SETUP
+
+sudo raspi-config
+serial port not monitor, serial port active
+
+EDITS TO /boot/firmware/config.txt FOR NVME AND OwlSight
+dtparam=nvme
+dtparam=pciex1_gen=3
+dtoverlay=ov64a40,link-frequency=360000000
+camera_auto_detect=0
+dtparam=uart0=on
+
+ONBOARD MEASURE TEMPERATURE
+vcgencmd measure_temp
+
+MORE DOCKER STUFF
+
+Created symlink /home/arducam/.config/systemd/user/default.target.wants/docker.service → /home/arducam/.config/systemd/user/docker.service.
+[INFO] Installed docker.service successfully.
+[INFO] To control docker.service, run: `systemctl --user (start|stop|restart) docker.service`
+[INFO] To run docker.service on system startup, run: `sudo loginctl enable-linger arducam`
+
+[INFO] Creating CLI context "rootless"
+Successfully created context "rootless"
+[INFO] Using CLI context "rootless"
+Current context is now "rootless"
+
+[INFO] Make sure the following environment variable(s) are set (or add them to ~/.bashrc):
+export PATH=/usr/bin:$PATH
+
+[INFO] Some applications may require the following environment variable too:
+export DOCKER_HOST=unix:///run/user/1000/docker.sock
+
+arducam@raspberrypi:~ $ vi .bashrc 
+arducam@raspberrypi:~ $ dockerd-rootless-setuptool.sh install

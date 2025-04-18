@@ -1,0 +1,13 @@
+[Unit]
+Description=Start hotspot and optional Wi-Fi client
+After=network.target NetworkManager.service
+Requires=NetworkManager.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/dualWifi.sh
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
+

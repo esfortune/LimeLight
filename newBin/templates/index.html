@@ -25,7 +25,7 @@
 </head>
 
 <body>
-    <h1>MothPad 120308045</h1>
+    <h1>MothPad 499760433</h1>
 
     <div class="color-bar"></div>
     <h2>Information and Actions</h2>
@@ -36,27 +36,22 @@
     </div>
 
     <div>
-        <button class="button1" id="script5" onclick="runScript('script5')">Show device date and time</button>
-        <p id="output-script5" class="output"></p>
-    </div>
-
-    <div>
-        <button class="button1" id="script6" onclick="runScript('script6')">Show device Mode</button>
-        <p id="output-script6" class="output"></p>
-    </div>
-
-    <div>
         <button class="button1" id="script4" onclick="runScript('script4')">Take Studio Photo</button>
         <p id="output-script4" class="output"></p>
     </div>
 
     <div>
-        <button class="button1" id="script3" onclick="runScript('script3')">Turn off all LEDs</button>
+        <button class="button1" id="script3" onclick="runScript('script3')">Turn off white and UV LEDs</button>
         <p id="output-script3" class="output"></p>
     </div>
 
+    <div>
+        <button class="button1" id="script-takeAudio" onclick="runScript('script-takeAudio')">Record Audio Sample</button>
+        <p id="output-script-takeAudio" class="output"></p>
+    </div>
+
     <div class="color-bar"></div>
-    <h2>Device Settings</h2>
+    <h2>Change Device Settings</h2>
 
     <div>
         To set location name (e.g. Yanayacu, Narupayacu), enter in box and click button<p>
@@ -66,9 +61,9 @@
     </div>
 
     <div>
-        To set GPS coordinates (i.e. 00d 35.9m S, 77d 53.4m W ), enter in box and click button<p>
+        To set GPS coordinates (i.e. 00d 35.9m S, 77d 53.4m W), enter in box and click button<p>
         <input type="text" id="gps-input" class="gps-input" size="25" placeholder="00d 35.9m S, 77d 53.4m W">
-        <button class="button2" onclick="setGPS()">Set GPS coordinates </button>
+        <button class="button2" onclick="setGPS()">Set GPS coordinates</button>
         <p id="gps-output" class="output"></p>
     </div>
 
@@ -83,18 +78,18 @@
     <h2>Dangerous deeds</h2>
 
     <div>
-        <font color="orange">Turning Wifi off is not reversible, and you will lose access to this page.</font><p>
-        <button class="button1" id="script2" onclick="runScript('script2')">Turn off Wifi</button>
-        <p id="output-script2" class="output"></p>
+        <font color="orange">Set the data collection schedule</font><p>
+        <a href='crontab' target='_blank'>Open schedule page</a>
+        </p>
     </div>
 
-<a href="foobaroo">foobaroo.html</a>
+    <div>
+        <font color="orange">Join a WiFi network for internet access</font><p>
+        <a href='wifi' target='_blank'>Open WiFi page</button>
+        </p>
+    </div>
 
-<!--    <h2>Set System Time</h2>
-    <input type="text" id="time-input" class="time-input" placeholder="11 FEB 2025 18:34:00">
-    <button class="button" onclick="setTime()">Set Time</button>
-    <p id="time-output" class="output"></p>
--->
+
 
     <script>
         function runScript(script) {
@@ -147,6 +142,61 @@
                 outputElement.textContent = "Error setting time.";
             });
         }
+
+	function setLocation() {
+    		const input = document.getElementById('location-input').value;
+    		const output = document.getElementById('location-output');
+
+    		// Check if input is alphanumeric (letters and numbers only)
+    		if (!/^[\w\-]+$/.test(input)) {
+        		output.textContent = 'Error: Input must be alphanumeric with no spaces or symbols.';
+        		return;
+    		}
+
+    		fetch('/set-location', {
+        		method: 'POST',
+        		headers: {
+            		'Content-Type': 'application/json'
+        		},
+        		body: JSON.stringify({ location: input })
+    		})
+    		.then(response => response.text())
+    		.then(data => {
+        		output.textContent = data;
+    		})
+    		.catch(error => {
+        		output.textContent = 'Error saving location';
+        		console.error(error);
+    		});
+	}
+
+        function setGPS() {
+                const input = document.getElementById('gps-input').value;
+                const output = document.getElementById('gps-output');
+
+                // Check if input is alphanumeric (letters and numbers and spaces and commas and periods)
+                if (!/^[a-zA-Z0-9,\s.]+$/.test(input)) {
+                        output.textContent = 'Error: Input must be in format shown.';
+                        return;
+                }
+
+                fetch('/set-gps', {
+                        method: 'POST',
+                        headers: {
+                        'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ gps: input })
+                })
+                .then(response => response.text())
+                .then(data => {
+                        output.textContent = data;
+                })
+                .catch(error => {
+                        output.textContent = 'Error saving GPS coordinates';
+                        console.error(error);
+                });
+        }
+
     </script>
 
 
