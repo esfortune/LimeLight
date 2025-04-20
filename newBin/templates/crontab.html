@@ -157,6 +157,14 @@
 
 <hr>
 
+<form method="POST" action="/load_preset1">
+    <button type="submit">PRESET1: 8pm-8am, every 1 minute photo. No audio.</button>
+</form>
+    <p id="status-msg"></p>
+
+
+<hr>
+
 <h3>Current crontab (use the internet to parse the schedule!)</h3>
 <button onclick="loadCrontab()" class="button2">Show current crontab</button>
 <pre id="current-crontab" style="background:#eee; padding: 1em; margin-top: 1em;"></pre>
@@ -178,10 +186,6 @@ function loadCrontab() {
         });
 }
 </script>
-
-
-
-
 
 
     <script>

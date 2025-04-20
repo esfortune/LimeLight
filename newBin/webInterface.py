@@ -13,7 +13,9 @@ import traceback
 
 PID_FILE = "/home/arducam/wifiUP.txt"  # Path to store the PID
 
-BASICS_FILE = os.path.expanduser("/home/arducam/cronbasics.txt")
+cron_BASIC_FILE = os.path.expanduser("/home/arducam/cron/basic.txt")
+cron_PRESET1 = os.path.expanduser("/home/arducam/cron/preset1.txt")
+cron_PRESET2 = os.path.expanduser("/home/arducam/cron/preset2.txt")
 CRON_COMMANDS = {'studio': '/home/arducam/bin/takeStudioPhoto.sh', 'audio': '/home/arducam/bin/takeAudio.sh'}
 
 # Save the current process PID
@@ -49,8 +51,8 @@ def set_crontab():
         cron_lines = []
 
         # Load baseline lines from cronbasics.txt
-        if os.path.exists(BASICS_FILE):
-            with open(BASICS_FILE, 'r') as f:
+        if os.path.exists(cron_BASIC_FILE):
+            with open(cron_BASIC_FILE, 'r') as f:
                 cron_lines.extend(line.strip() for line in f if line.strip())
 
         for task in ['studio', 'audio']:
@@ -99,6 +101,25 @@ def set_crontab():
         print("Exception occurred:", e)
         traceback.print_exc()
         return "Failed to update crontab", 500
+
+@app.route('/load_preset1', methods=['POST'])
+def load_preset1():
+
+    try:
+        if os.path.exists(cron_PRESET1):
+            if os.path.exists(cron_BASIC_FILE):
+                 with open('/tmp/presetcron', 'w') as out, \
+                     open(cron_BASIC_FILE, 'r') as f1, \
+                     open(cron_PRESET1, 'r') as f2:
+                     out.write(f1.read())
+                     out.write(f2.read())
+
+        # Write updated crontab
+        subprocess.run(["crontab", "/tmp/presetcron"], check=True)
+        return "Crontab updated successfully."
+
+    except Exception as e:
+        return f"Failed to load preset: {str(e)}", 500
 
 @app.route('/get-crontab', methods=['GET'])
 def get_crontab():
@@ -174,24 +195,27 @@ def set_gps():
         return f'Failed to save gps: {e}', 500
 
 
-def scan_wifi_networks():
+def scan_wifi_networks(interface='wlan1'):
     try:
-        output = subprocess.check_output(['nmcli', '-t', '-f', 'SSID', 'dev', 'wifi']).decode()
+        output = subprocess.check_output(['nmcli', '-t', '-f', 'SSID', 'dev', 'wifi', 'list', 'ifname', interface]).decode()
         ssids = sorted(set(filter(None, output.strip().split('\n'))))  # Remove empty and duplicates
         return ssids
     except subprocess.CalledProcessError:
         return []
 
-def get_connection_status():
+def get_connection_status(interface='wlan1'):
     try:
         output = subprocess.check_output(['nmcli', '-t', '-f', 'DEVICE,STATE,CONNECTION', 'dev']).decode()
         for line in output.strip().splitlines():
             parts = line.strip().split(':')
-            if parts[0] == 'wlan0' and parts[1] == 'connected':
-                return f"Connected to {parts[2]}"
-        return "Not connected"
+            if parts[0] == interface:
+                state = parts[1]
+                con = parts[2] if len(parts) > 2 else "N/A"
+                return f"{interface} is {state} ({con})"
+        return f"{interface} not found"
     except:
         return "Unknown"
+
 
 @app.route("/wifi")
 def wifi():
@@ -201,34 +225,25 @@ def wifi():
 
 @app.route('/connect', methods=['POST'])
 def connect():
-    data = request.get_json()
-    ssid = data.get('ssid')
-    password = data.get('password', '')
-
-    if not ssid:
-        return jsonify({"status": "failure", "message": "SSID is required."}), 400
+    ssid = request.form.get('ssid')
+    password = request.form.get('password')
 
     try:
-        # Bring down the hotspot if it's running
-        subprocess.call(['nmcli', 'con', 'down', 'hotspot'])
-
-        # Delete existing connection with same name (if it exists)
-        subprocess.call(['nmcli', 'con', 'delete', ssid])
 
         # Add the new connection
         subprocess.run([
-            'nmcli', 'con', 'add',
+            'sudo', 'nmcli', 'con', 'add',
             'type', 'wifi',
-            'ifname', 'wlan0',
+            'ifname', 'wlan1',
             'con-name', ssid,
             'ssid', ssid
         ], check=True)
 
         # Add password settings
         subprocess.run([
-            'nmcli', 'con', 'modify', ssid,
+            'sudo', 'nmcli', 'con', 'modify', ssid,
             'wifi-sec.key-mgmt', 'wpa-psk',
-            'wifi-sec.psk', password
+            'wifi-sec.psk', password, 'ifname', 'wlan1'
         ], check=True)
 
         # Try to bring up the connection

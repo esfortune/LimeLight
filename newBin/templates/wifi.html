@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Connect to Wi-Fi (wlan1)</title>
+</head>
+<body>
+    <h2>Connect to Local Wi-Fi via wlan1</h2>
+    <p><strong>Status:</strong> {{ status }}</p>
+
+    <form action="/connect" method="post">
+        <label for="ssid">Available Networks:</label><br>
+        <select name="ssid" id="ssid" required>
+            {% for ssid in ssids %}
+                <option value="{{ ssid }}">{{ ssid }}</option>
+            {% endfor %}
+        </select><br><br>
+
+        <label for="password">Password:</label><br>
+        <input type="password" name="password" id="password" required><br><br>
+
+        <input type="submit" value="Connect">
+    </form>
+
+    <br>
+    <form method="get" action="/">
+        <input type="submit" value="Rescan Networks">
+    </form>
+</body>
+</html>
+

@@ -1,0 +1,4 @@
+# Ensure that the Attractor LED and Panel LED are turned off for the day at 9:01 and 9:02am
+1-2 9 * * * /home/arducam/bin/allLEDsOFF.sh >> /home/arducam/data/curdat/errorlog.txt 2>&1
+
+# Run the daily backup
