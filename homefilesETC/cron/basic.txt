@@ -1,4 +1,16 @@
-# Ensure that the Attractor LED and Panel LED are turned off for the day at 9:01 and 9:02am
+# Basic scheduling (crontab) format
+# *    *    *    *    *  /command/to/be/executed
+# ┬    ┬    ┬    ┬    ┬
+# │    │    │    │    └─  Day of Week   (0=Sun .. 6=Sat)
+# │    │    │    └──────  Month         (1..12)
+# │    │    └───────────  Day of Month  (1..31)
+# │    └────────────────  Hour          (0..23)
+# └─────────────────────  Minute        (0..59)
+
+##### SCHEDULE (CRONTAB FORMAT) BEGINS HERE
+# Ensure that the UV Attractor LED and White Panel LED are turned off each day at 9:01am and 9:02am.
 1-2 9 * * * /home/arducam/bin/allLEDsOFF.sh >> /home/arducam/data/curdat/errorlog.txt 2>&1
 
-# Run the daily backup
+# Run the daily backup at noon every day.
+0 12 * * * /home/arducam/bin/dailyBackup-rclone.sh
+

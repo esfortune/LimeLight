@@ -1,3 +1,6 @@
+## THIS IS A BASIC CRONTAB that collects audio every 5 minutes throughout the day and night
+## and a studio photo every minute from 8pm (20) to 8am (8).
+
 # Every 5 minutes take an 1-minute duration audio sample
 # */5 * * * * /home/arducam/bin/dataCollection.py NoStudio NoEnv >> /home/arducam/data/curdat/errorlog.txt 2>&1
 
@@ -7,5 +10,4 @@
 # From midnight until 8am, take a Studio photo every 1 minutes
 ## */1 0-7 * * * /home/arducam/bin/dataCollection.py NoEnv NoAudio >> /home/arducam/data/curdat/errorlog.txt 2>&1
 ## 0 8 * * * /home/arducam/bin/dataCollection.py NoEnv NoAudio >> /home/arducam/data/curdat/errorlog.txt 2>&1
-
 
