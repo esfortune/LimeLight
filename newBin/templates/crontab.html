@@ -14,9 +14,11 @@
 <body>
     <h1>Data Collection Scheduler</h1>
 
+<hr>
+<h2>Custom schedule builder</h2>
     <form id="crontab-form">
         <div class="section">
-            <label><input type="checkbox" id="studio-enabled"> Enable takeStudio.sh</label><br>
+            <label><input type="checkbox" id="studio-enabled"> Schedule Studio photos</label><br>
             <div id="studio-options" class="hidden">
                 <label><input type="radio" name="studio-mode" value="everyday" checked> Same schedule every day</label>
                 <label><input type="radio" name="studio-mode" value="custom"> Custom schedule per day</label>
@@ -83,7 +85,7 @@
         </div>
 
         <div class="section">
-            <label><input type="checkbox" id="audio-enabled"> Enable takeAudio.sh</label><br>
+            <label><input type="checkbox" id="audio-enabled"> Schedule Audio recordings</label><br>
             <div id="audio-options" class="hidden">
                 <label><input type="radio" name="audio-mode" value="everyday" checked> Same schedule every day</label>
                 <label><input type="radio" name="audio-mode" value="custom"> Custom schedule per day</label>
@@ -154,18 +156,31 @@
 
     <p id="status-msg"></p>
 
-
 <hr>
+<h2>Preset schedule, version 1</h2>
 
 <form method="POST" action="/load_preset1">
     <button type="submit">PRESET1: 8pm-8am, every 1 minute photo. No audio.</button>
 </form>
-    <p id="status-msg"></p>
-
+<p>This is the schedule I used at Yanayacu - every day of the week overnight photos with no audio.
+<p id="status-msg"></p>
 
 <hr>
 
-<h3>Current crontab (use the internet to parse the schedule!)</h3>
+<h2>Preset schedule, version 2</h2>
+
+<form method="POST" action="/load_preset2">
+    <button type="submit">PRESET2: Arbitrary, idiosyncratic custom schedule.</button>
+</form>
+<p>Mondays: Take studio photos each minute from 3-6am<br> 
+Wednesdays: Take studio photos every 2 minutes from 7pm-10pm<br>
+Fridays: Take photos every minute and audio samples every 5 minutes from 11pm to 2am.</p>
+
+<p id="status-msg"></p>
+
+<hr>
+
+<h2>Show active SCHEDULE (in 'crontab' format - use the internet to parse the schedule!)</h2>
 <button onclick="loadCrontab()" class="button2">Show current crontab</button>
 <pre id="current-crontab" style="background:#eee; padding: 1em; margin-top: 1em;"></pre>
 

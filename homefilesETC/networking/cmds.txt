@@ -1,4 +1,4 @@
-
+nmcli -t -f SSID dev wifi list ifname wlan1
 
 
 sudo cp usrlocalbin-dualWifi.sh /usr/local/bin/dualWifi.sh

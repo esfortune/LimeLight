@@ -121,6 +121,26 @@ def load_preset1():
     except Exception as e:
         return f"Failed to load preset: {str(e)}", 500
 
+@app.route('/load_preset2', methods=['POST'])
+def load_preset2():
+
+    try:
+        if os.path.exists(cron_PRESET2):
+            if os.path.exists(cron_BASIC_FILE):
+                 with open('/tmp/presetcron', 'w') as out, \
+                     open(cron_BASIC_FILE, 'r') as f1, \
+                     open(cron_PRESET2, 'r') as f2:
+                     out.write(f1.read())
+                     out.write(f2.read())
+    
+        # Write updated crontab
+        subprocess.run(["crontab", "/tmp/presetcron"], check=True)
+        return "Crontab updated successfully."
+
+    except Exception as e:
+        return f"Failed to load preset: {str(e)}", 500
+
+
 @app.route('/get-crontab', methods=['GET'])
 def get_crontab():
     try:
