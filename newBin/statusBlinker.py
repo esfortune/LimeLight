@@ -30,6 +30,13 @@ def blinking_fastGREEN(): # Fast green blinking as if machine is working
         pixels.fill(0x000000)
         sleep(0.05)
 
+def blinking_fastRED(): # Fast green blinking as if machine is working
+    while True:
+        pixels.fill(0xff0000)
+        sleep(0.05)
+        pixels.fill(0x000000)
+        sleep(0.05)
+
 def blinking_doubletsRED(): # Double red blink that is definitely an error
     while True:
         pixels.fill(0xff0000)
@@ -72,7 +79,7 @@ def main():
     
     # Determine the blink pattern based on the argument
     if sys.argv[1] == '1':
-        blinking_slowPURPLE()
+        blinking_fastRED()
     elif sys.argv[1] == '2':
         blinking_fastGREEN() 
     elif sys.argv[1] == '3':
