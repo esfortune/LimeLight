@@ -2,7 +2,7 @@
 
 sleep 5
 
-/home/arducam/bin/checkMode.py
+/home/canopylife/bin/checkMode.py
 status=$?
 
 if [ $status = 1 ]; then

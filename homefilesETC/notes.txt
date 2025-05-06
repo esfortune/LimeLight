@@ -24,7 +24,7 @@ DUFS WEB INTERFACE
 
 sudo docker pull sigoden/dufs
 mkdir ~/data
-sudo docker run -v /home/arducam/data:/data -p 5000:5000 --rm sigoden/dufs /data -A
+sudo docker run -v /home/canopylife/data:/data -p 5000:5000 --rm sigoden/dufs /data -A
 
 Install eINK display
 
@@ -69,10 +69,10 @@ vcgencmd measure_temp
 
 MORE DOCKER STUFF
 
-Created symlink /home/arducam/.config/systemd/user/default.target.wants/docker.service → /home/arducam/.config/systemd/user/docker.service.
+Created symlink /home/canopylife/.config/systemd/user/default.target.wants/docker.service → /home/canopylife/.config/systemd/user/docker.service.
 [INFO] Installed docker.service successfully.
 [INFO] To control docker.service, run: `systemctl --user (start|stop|restart) docker.service`
-[INFO] To run docker.service on system startup, run: `sudo loginctl enable-linger arducam`
+[INFO] To run docker.service on system startup, run: `sudo loginctl enable-linger canopylife`
 
 [INFO] Creating CLI context "rootless"
 Successfully created context "rootless"
@@ -85,5 +85,5 @@ export PATH=/usr/bin:$PATH
 [INFO] Some applications may require the following environment variable too:
 export DOCKER_HOST=unix:///run/user/1000/docker.sock
 
-arducam@raspberrypi:~ $ vi .bashrc 
-arducam@raspberrypi:~ $ dockerd-rootless-setuptool.sh install
+canopylife@raspberrypi:~ $ vi .bashrc 
+canopylife@raspberrypi:~ $ dockerd-rootless-setuptool.sh install
