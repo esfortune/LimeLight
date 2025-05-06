@@ -6,8 +6,8 @@ Requires=network-online.target
 [Service]
 ExecStart=/usr/local/bin/startFlask.sh
 Restart=on-failure
-User=arducam
-WorkingDirectory=/home/arducam/bin
+User=canopylife
+WorkingDirectory=/home/canopylife/bin
 StandardOutput=journal
 StandardError=journal
 

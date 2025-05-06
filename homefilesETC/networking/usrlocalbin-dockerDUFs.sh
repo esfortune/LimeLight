@@ -1,11 +1,11 @@
 #!/bin/bash
 
 # Path to the data directory
-DATA_DIR="/home/arducam/data"
+DATA_DIR="/home/canopylife/data"
 
 # # Check the state of GPIO 23 using pinctrl
 # PIN_STATE=$(pinctrl lev 23)
-/home/arducam/bin/checkMode.py
+/home/canopylife/bin/checkMode.py
 status=$?
 
 if [ $status = 1 ]; then
