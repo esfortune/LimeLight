@@ -1,4 +1,4 @@
-#!/home/arducam/neopixel/bin/python3
+#!/home/canopylife/PyEnvs/neopixel/bin/python3
 # Copyright Eric Fortune, CanopyLife, April 2025 
 # Code written for MothPad device.
 
