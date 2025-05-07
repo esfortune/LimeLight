@@ -157,7 +157,7 @@
     <p id="status-msg"></p>
 
 <hr>
-<h2>Preset schedule, version 1</h2>
+<h2>Preset schedule 1, "Yanayacu" 1 photo per minute, 8pm-8am, everyday, No Audio</h2>
 
 <form method="POST" action="/load_preset1">
     <button type="submit">PRESET1: 8pm-8am, every 1 minute photo. No audio.</button>
@@ -167,7 +167,7 @@
 
 <hr>
 
-<h2>Preset schedule, version 2</h2>
+<h2>Preset schedule 2, "Bird Frustrator" 1 photo per minute, M-W-F for 3 hours at different times, No Audio</h2>
 
 <form method="POST" action="/load_preset2">
     <button type="submit">PRESET2: Arbitrary, idiosyncratic custom schedule.</button>
@@ -180,6 +180,17 @@ Fridays: Take photos every minute and audio samples every 5 minutes from 11pm to
 
 <hr>
 
+<h2>Preset schedule 3, "Montevideo" 1 photo every 2 minutes overnight, 60 second Audio every 5 minutes all day, every day</h2>
+
+<form method="POST" action="/load_preset3">
+    <button type="submit">PRESET3: Standard Photo and Audio schedule</button>
+</form>
+<p>Every day of the week overnight photos taken every 2 minutes from 8pm-8am. Audio is 60 second duration
+recordings at 384kHz sample rate, take every 5 minutes.
+
+<p id="status-msg"></p>
+
+<hr>
 <h2>Show active SCHEDULE (in 'crontab' format - use the internet to parse the schedule!)</h2>
 <button onclick="loadCrontab()" class="button2">Show current crontab</button>
 <pre id="current-crontab" style="background:#eee; padding: 1em; margin-top: 1em;"></pre>

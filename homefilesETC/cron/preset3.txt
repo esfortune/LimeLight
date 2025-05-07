@@ -1,0 +1,16 @@
+## THIS IS A BASIC CRONTAB that collects audio every 5 minutes throughout the day and night
+## and a studio photo every second minute from 8pm (20) to 8am (8).
+
+# Every 5 minutes take an 1-minute duration audio sample
+*/5 * * * * /home/canopylife/bin/takeAudio.sh >> /home/canopylife/data/curdat/errorlog.txt 2>&1
+
+# From 8pm to midnight, take a Studio photo every 1 minutes
+*/2 20-23 * * * /home/canopylife/bin/takeStudioPhoto.sh >> /home/canopylife/data/curdat/errorlog.txt 2>&1
+
+# From midnight until 8am, take a Studio photo every 1 minutes
+*/2 0-7 * * * /home/canopylife/bin/takeStudioPhoto.sh >> /home/canopylife/data/curdat/errorlog.txt 2>&1
+0 8 * * * /home/canopylife/bin/takeStudioPhoto.sh >> /home/canopylife/data/curdat/errorlog.txt 2>&1
+
+# Turn off the attractor lights
+1 8 * * * /home/canopylife/bin/allLEDsOFF.sh >> /home/canopylife/data/curdat/errorlog.txt 2>&1
+2 8 * * * /home/canopylife/bin/allLEDsOFF.sh >> /home/canopylife/data/curdat/errorlog.txt 2>&1

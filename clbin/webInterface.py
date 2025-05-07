@@ -16,6 +16,7 @@ PID_FILE = "/home/canopylife/wifiUP.txt"  # Path to store the PID
 cron_BASIC_FILE = os.path.expanduser("/home/canopylife/cron/basic.txt")
 cron_PRESET1 = os.path.expanduser("/home/canopylife/cron/preset1.txt")
 cron_PRESET2 = os.path.expanduser("/home/canopylife/cron/preset2.txt")
+cron_PRESET3 = os.path.expanduser("/home/canopylife/cron/preset3.txt")
 CRON_COMMANDS = {'studio': '/home/canopylife/bin/takeStudioPhoto.sh', 'audio': '/home/canopylife/bin/takeAudio.sh'}
 
 # Save the current process PID
@@ -140,7 +141,25 @@ def load_preset2():
     except Exception as e:
         return f"Failed to load preset: {str(e)}", 500
 
+@app.route('/load_preset3', methods=['POST'])
+def load_preset3():
 
+    try:
+        if os.path.exists(cron_PRESET3):
+            if os.path.exists(cron_BASIC_FILE):
+                 with open('/tmp/presetcron', 'w') as out, \
+                     open(cron_BASIC_FILE, 'r') as f1, \
+                     open(cron_PRESET3, 'r') as f2:
+                     out.write(f1.read())
+                     out.write(f2.read()) 
+
+        # Write updated crontab
+        subprocess.run(["crontab", "/tmp/presetcron"], check=True)
+        return "Crontab updated successfully."
+
+    except Exception as e:
+        return f"Failed to load preset: {str(e)}", 500
+    
 @app.route('/get-crontab', methods=['GET'])
 def get_crontab():
     try:

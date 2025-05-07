@@ -6,13 +6,13 @@
 ## ...and take an audio sample once every 5 minutes in the same time window.
 
 #Monday mornings, 3am-6am, every minute, photo only
-*/1 3-6 * * 1 /home/arducam/bin/takeStudioPhoto.sh >/dev/null 2>&1
+*/1 3-6 * * 1 /home/canopylife/bin/takeStudioPhoto.sh > /home/canopylife/data/curdat/errorlog.txt 2>&1 
 
 # Wednesday evenings, 7pm-10pm, every other minute, photo only
-*/2 19-22 * * 3 /home/arducam/bin/takeStudioPhoto.sh >/dev/null 2>&1
+*/2 19-22 * * 3 /home/canopylife/bin/takeStudioPhoto.sh > /home/canopylife/data/curdat/errorlog.txt 2>&1
 
 # Friday nights, 11pm-2am, every minute photo, every 5 minutes audio
-*/1 23 * * 5 /home/arducam/bin/takeStudioPhoto.sh >/dev/null 2>&1
-*/5 23 * * 5 /home/arducam/bin/takeAudio.sh >/dev/null 2>&1
-*/1 0-2 * * 6 /home/arducam/bin/takeStudioPhoto.sh >/dev/null 2>&1
-*/5 0-2 * * 6 /home/arducam/bin/takeAudio.sh >/dev/null 2>&1
+*/1 23 * * 5 /home/canopylife/bin/takeStudioPhoto.sh > /home/canopylife/data/curdat/errorlog.txt 2>&1
+*/5 23 * * 5 /home/canopylife/bin/takeAudio.sh > /home/canopylife/data/curdat/errorlog.txt 2>&1
+*/1 0-2 * * 6 /home/canopylife/bin/takeStudioPhoto.sh > /home/canopylife/data/curdat/errorlog.txt 2>&1
+*/5 0-2 * * 6 /home/canopylife/bin/takeAudio.sh > /home/canopylife/data/curdat/errorlog.txt 2>&1
