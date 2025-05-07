@@ -1,0 +1,6 @@
+[all]
+dtparam=nvme
+dtparam=pciex1_gen=3
+camera_auto_detect=0
+dtoverlay=ov64a40,cam0,link-frequency=360000000
+dtoverlay=disable-bt
