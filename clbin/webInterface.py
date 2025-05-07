@@ -236,7 +236,7 @@ def set_gps():
 
 def scan_wifi_networks(interface='wlan1'):
     try:
-        output = subprocess.check_output(['nmcli', '-t', '-f', 'SSID', 'dev', 'wifi', 'list', 'ifname', interface]).decode()
+        output = subprocess.check_output(['sudo', 'nmcli', '-t', '-f', 'SSID', 'dev', 'wifi', 'list', 'ifname', interface]).decode()
         ssids = sorted(set(filter(None, output.strip().split('\n'))))  # Remove empty and duplicates
         return ssids
     except subprocess.CalledProcessError:
@@ -244,7 +244,7 @@ def scan_wifi_networks(interface='wlan1'):
 
 def get_connection_status(interface='wlan1'):
     try:
-        output = subprocess.check_output(['nmcli', '-t', '-f', 'DEVICE,STATE,CONNECTION', 'dev']).decode()
+        output = subprocess.check_output(['sudo', 'nmcli', '-t', '-f', 'DEVICE,STATE,CONNECTION', 'dev']).decode()
         for line in output.strip().splitlines():
             parts = line.strip().split(':')
             if parts[0] == interface:
@@ -286,7 +286,7 @@ def connect():
         ], check=True)
 
         # Try to bring up the connection
-        subprocess.run(['nmcli', 'con', 'up', ssid], check=True)
+        subprocess.run(['sudo', 'nmcli', 'con', 'up', ssid], check=True)
 
         return jsonify({"status": "success", "message": f"Connected to {ssid}."})
 
