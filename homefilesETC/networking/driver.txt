@@ -1,0 +1,7 @@
+git clone https://github.com/lwfinger/rtw88
+
+sudo apt install dkms
+
+cd rtw88
+
+sudo dkms install $PWD
