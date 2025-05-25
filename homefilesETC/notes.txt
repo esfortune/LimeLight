@@ -1,3 +1,9 @@
+# Get and set the serial number
+
+cat /proc/cpuinfo  | grep Serial | sed -E 's/^[^:]*:\s*([^\s]{9}).*/\1/' > ~/serialNumber.txt
+
+
+
 # local display on RPi HDMI in an ssh shell
 sudo fbi --autozoom --noverbose --vt 1 test.png
 
