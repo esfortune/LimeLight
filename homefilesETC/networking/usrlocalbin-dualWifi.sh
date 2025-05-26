@@ -41,9 +41,9 @@ fi
 else
      # The switch calls for us to be in DARK mode, so do nothing but let the user know.
      rfkill block wlan
-     timeout 2 /home/arducam/bin/statusBlinker.py 1 
-     /home/arducam/bin/statusBlinker.py 6
+     timeout 2 /home/canopylife/bin/statusBlinker.py 1 
+     /home/canopylife/bin/statusBlinker.py 6
 
      logger "[wifi_dual_mode] Low power mode - used rfkill to turn off wlan interfaces"
-     /home/arducam/bin/statusBlinker.py 6
+     /home/canopylife/bin/statusBlinker.py 6
 fi
