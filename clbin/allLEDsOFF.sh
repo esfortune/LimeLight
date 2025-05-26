@@ -5,8 +5,8 @@
 # This is a simple script to turn off the attractor and Studio LEDs.
 # Extract the GPIO pin numbers from config.py
 
-attractorOFF=`grep attractorOFF_gpio /home/arducam/bin/config.py | sed 's/[^0-9]//g'`
-panelOFF=`grep studioOFF_gpio /home/arducam/bin/config.py | sed 's/[^0-9]//g'`
+attractorOFF=`grep attractorOFF_gpio /home/canopylife/bin/config.py | sed 's/[^0-9]//g'`
+panelOFF=`grep studioOFF_gpio /home/canopylife/bin/config.py | sed 's/[^0-9]//g'`
 
 # attractorOFF=6
 # panelOFF=13
