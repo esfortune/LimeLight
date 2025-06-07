@@ -4,7 +4,7 @@ cat /proc/cpuinfo  | grep Serial | sed -E 's/^[^:]*:\s*([^\s]{9}).*/\1/' > ~/ser
 
 APT INSTALL STUFF
 
-sudo apt install libjpeg-turbo-progs parallel fbi links ffmpeg dkms
+sudo apt install libjpeg-turbo-progs parallel fbi links ffmpeg dkms rclone
 
 
 # local display on RPi HDMI in an ssh shell
