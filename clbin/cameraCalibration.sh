@@ -35,10 +35,13 @@ sleep 2
 
 #########################################################################
 
-for pos in $(seq 6.6 0.2 8.4); do
+for pos in $(seq 6.8 0.1 7.8); do
+
+filenam=`echo $pos | sed 's/[^0-9]*//g'`
 
   echo "Capturing with lens-position: $pos"
-  libcamera-still -n --datetime --autofocus-mode manual --lens-position "$pos" --sharpness 2 --exposure sport
+#  libcamera-still -n --datetime --autofocus-mode manual --lens-position "$pos" --sharpness 2 --exposure sport
+  libcamera-still -n --autofocus-mode manual --lens-position "$pos" --sharpness 2 --exposure sport -o $filenam.jpg
   sleep 1
 
   filename=`ls -t *.jpg | head -1`

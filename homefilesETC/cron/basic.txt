@@ -12,5 +12,5 @@
 1-2 9 * * * /home/canopylife/bin/allLEDsOFF.sh >> /home/canopylife/data/curdat/errorlog.txt 2>&1
 
 # Run the daily backup at noon every day.
-0 12 * * * /home/canopylife/bin/dailyBackup-rclone.sh
+0 12 * * * /home/canopylife/bin/dailyBackup.sh
 
