@@ -26,3 +26,15 @@ if [ -d "$dataDIR" ]; then
 
 fi
 
+## Check to see the position of the switch. If it is 1, then we are in "standard" mode
+## and we should make the timelapse movie.
+
+/home/canopylife/bin/checkMode.py
+status=$?
+
+if [ $status = 1 ]; then
+
+   # Make the movie
+   movieMaker.sh $backupDIR
+
+fi
