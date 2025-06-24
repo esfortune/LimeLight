@@ -32,7 +32,7 @@ SCRIPTS = {
     "script-devinfo": "/home/canopylife/bin/wDeviceInfo.py",
     "script2": "/home/canopylife/bin/wifiV1down4ever.sh",
     "script3": "/home/canopylife/bin/allLEDsOFF.sh",
-    "script4": "/home/canopylife/bin/takeStudioPhoto.sh",
+    "script4": "/home/canopylife/bin/testStudioPhoto.sh",
     "script5": "/home/canopylife/bin/msgDate.sh",
     "script6": "/home/canopylife/bin/checkMode.py"
 }
