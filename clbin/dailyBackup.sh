@@ -35,6 +35,6 @@ status=$?
 if [ $status = 1 ]; then
 
    # Make the movie
-   movieMaker.sh $backupDIR
+   /home/canopylife/bin/movieMaker.sh $backupDIR
 
 fi
