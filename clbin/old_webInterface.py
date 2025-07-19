@@ -265,35 +265,27 @@ def wifi():
 @app.route('/connect', methods=['POST'])
 def connect():
     ssid = request.form.get('ssid')
-    password = request.form.get('password', '').strip()
+    password = request.form.get('password')
 
     try:
+
         # Add the new connection
-        add_cmd = [
+        subprocess.run([
             'sudo', 'nmcli', 'con', 'add',
             'type', 'wifi',
             'ifname', 'wlan1',
             'con-name', ssid,
             'ssid', ssid
-        ]
+        ], check=True)
 
-        subprocess.run(add_cmd, check=True)
+        # Add password settings
+        subprocess.run([
+            'sudo', 'nmcli', 'con', 'modify', ssid,
+            'wifi-sec.key-mgmt', 'wpa-psk',
+            'wifi-sec.psk', password, 'ifname', 'wlan1'
+        ], check=True)
 
-        if password:
-            # Add security settings for secured network
-            subprocess.run([
-                'sudo', 'nmcli', 'con', 'modify', ssid,
-                'wifi-sec.key-mgmt', 'wpa-psk',
-                'wifi-sec.psk', password, 'ifname', 'wlan1'
-            ], check=True)
-        else:
-            # Set to open network (no key management)
-            subprocess.run([
-                'sudo', 'nmcli', 'con', 'modify', ssid,
-                'wifi-sec.key-mgmt', 'none', 'ifname', 'wlan1'
-            ], check=True)
-
-        # Bring up the connection
+        # Try to bring up the connection
         subprocess.run(['sudo', 'nmcli', 'con', 'up', ssid], check=True)
 
         return jsonify({"status": "success", "message": f"Connected to {ssid}."})

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>MothPad 499760433</title>
+    <title>MothPad LR_262e25cf1</title>
     <style>
         body { text-align: center; font-family: Arial, sans-serif; font-size: 24px; }
         .button1 {
@@ -12,11 +12,6 @@
         .button2 {
             font-size: 36px; padding: 15px 30px; margin: 20px;
             background-color: blue; border: none; color: white;
-            cursor: pointer; transition: 0.3s;
-        }
-        .button3 {
-            font-size: 36px; padding: 15px 30px; margin: 20px;
-            background-color: orange; border: none; color: white;
             cursor: pointer; transition: 0.3s;
         }
         .active { background-color: red; }
@@ -30,24 +25,15 @@
 </head>
 
 <body>
-    <h1>MothPad 499760433</h1>
+    <h1>MothPad LR_262e25cf1</h1>
 
     <div class="color-bar"></div>
-    <h2>Information</h2>
+    <h2>Information and Actions</h2>
 
     <div>
         <button class="button1" id="script-devinfo" onclick="runScript('script-devinfo')">Get Device Info</button>
         <pre id="output-script-devinfo" class="output"></pre>
     </div>
-
-    <div>
-        <button class="button1" id="script-devinfo" onclick="loadCrontab()">Show Schedule</button>
-        <pre id="current-crontab" style="background:#eee; padding: 1em; margin-top: 1em; font-size: 16px; text-align: left"></pre>
-    </div>
-
-
-    <div class="color-bar"></div>
-    <h2>Actions</h2>
 
     <div>
         <button class="button1" id="script4" onclick="runScript('script4')">Take Studio Photo</button>
@@ -92,34 +78,16 @@
     <h2>Dangerous deeds</h2>
 
     <div>
-        <button class="button3" onclick="window.open('crontab', '_blank')">Open Schedule Page</button>
+        <font color="orange">Set the data collection schedule</font><p>
+        <a href='crontab' target='_blank'>Open schedule page</a>
+        </p>
     </div>
 
     <div>
-        <button class="button3" onclick="window.open('wifi', '_blank')">Open WiFi Page</button>
+        <font color="orange">Join a WiFi network for internet access</font><p>
+        <a href='wifi' target='_blank'>Open WiFi page</button>
+        </p>
     </div>
-
-<hr>
-<p>
-
-
-<script>
-function loadCrontab() {
-    fetch('/get-crontab')
-        .then(response => response.json())
-        .then(data => {
-            const pre = document.getElementById("current-crontab");
-            if (data.status === "success") {
-                pre.textContent = data.crontab;
-            } else {
-                pre.textContent = "Failed to load crontab: " + data.crontab;
-            }
-        })
-        .catch(err => {
-            document.getElementById("current-crontab").textContent = "Error fetching crontab: " + err;
-        });
-}
-</script>
 
 
 

@@ -15,6 +15,38 @@
     <h1>Data Collection Scheduler</h1>
 
 <hr>
+<h2>Preset schedule 1: "All night long"</h2><p>(1 photo per minute, 7pm-5am, everyday, No Audio)</p>
+
+<form method="POST" action="/load_preset1">
+    <button type="submit">PRESET1: 7pm-5am, every 1 minute photo. No audio.</button>
+</form>
+<p>Show me the data, all night long.
+<p id="status-msg"></p>
+
+<hr>
+
+<h2>Preset schedule 2: "6 hours to Joy"</h2><p>(1 photo per minute, 7pm-10pm and 2am-5am, No Audio)</p>
+
+<form method="POST" action="/load_preset2">
+    <button type="submit">PRESET2: 7pm-10pm and 2am-5am, every 1 minute photo. No audio.</button>
+</form>
+<p>Six hours might be enough. This is the 2025 <b>Limelight Rainforest</b> standard schedule.
+<p id="status-msg"></p>
+
+<hr>
+
+<h2>Preset schedule 3: "TESTING TESTING"</h2><p>Photos 0-5 every 10 minutes, attractor off after.</p>
+
+<form method="POST" action="/load_preset3">
+    <button type="submit">PRESET3: Every 10 minutes take 6 photos at 0,1,2,3,4,5 and turn off light at 6.</button>
+</form>
+<p>This schedule allows you to see if the device is functioning properly within a max of 10 minutes. <br> It takes photos
+every hour throughout the day. The photos are at: <P>0,1,2,3,4,5, <br>10,11,12,13,14,15, <br>20,21,22,23,24,25, <br>30,31,32,33,34,35, <br>40,41,42,43,44,45, <br>50,51,52,53,54,55.<p>
+
+The attractor light turns off at 6,16,26,36,46,56 of each hour.
+<p id="status-msg"></p>
+
+<hr>
 <h2>Custom schedule builder</h2>
     <form id="crontab-form">
         <div class="section">
@@ -155,37 +187,6 @@
     </form>
 
     <p id="status-msg"></p>
-
-<hr>
-<h2>Preset schedule 1, "All night long" 1 photo per minute, 7pm-5am, everyday, No Audio</h2>
-
-<form method="POST" action="/load_preset1">
-    <button type="submit">PRESET1: 7pm-5am, every 1 minute photo. No audio.</button>
-</form>
-<p>Show me the data, all night long.
-<p id="status-msg"></p>
-
-<hr>
-
-<h2>Preset schedule 2, "6 hours to Joy" 1 photo per minute, 7pm-10pm and 2am-5am, No Audio</h2>
-
-<form method="POST" action="/load_preset2">
-    <button type="submit">PRESET2: 7pm-10pm and 2am-5am, every 1 minute photo. No audio.</button>
-</form>
-<p>Six hours might be enough.
-<p id="status-msg"></p>
-
-<hr>
-
-<h2>Preset schedule 3, "TESTING TESTING" photos 0-5 every 10 minutes, attractor off after.</h2>
-
-<form method="POST" action="/load_preset3">
-    <button type="submit">PRESET3: Every 10 minutes take 6 photos at 0,1,2,3,4,5 and turn off light at 6.</button>
-</form>
-<p>This schedule allows you to see if the device is functioning properly within a max of 10 minutes. It takes photos
-every hour throughout the day. The photos are at 0,1,2,3,4,5, 10,11,12,13,14,15, 20,21,22,23,24,25, 30,31,32,33,34,35, 40,41,42,43,44,45, 50,51,52,53,54,55.
-The attractor light turns off at 6,16,26,36,46,56 of each hour.
-<p id="status-msg"></p>
 
 <hr>
 <h2>Show active SCHEDULE (in 'crontab' format - use the internet to parse the schedule!)</h2>
