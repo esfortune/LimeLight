@@ -34,3 +34,14 @@ sudo nmcli connection up "MyWiFi"
 
 sudo iwlist wlan1 scan | grep SS
 
+
+nmcli connection add type wifi ifname wlan1 con-name "Laboratorio" ssid "Laboratorio"
+nmcli connection modify "Laboratorio" wifi-sec.key-mgmt wpa-psk
+nmcli connection modify "Laboratorio" wifi-sec.psk "maquisapa"
+nmcli connection modify "Laboratorio" connection.autoconnect yes
+
+nmcli connection add type wifi ifname wlan1 con-name "Admin_TBS" ssid "Admin_TBS"
+nmcli connection modify "Admin_TBS" wifi-sec.key-mgmt wpa-psk
+nmcli connection modify "Admin_TBS" wifi-sec.psk "Admin_TBS_2024"
+nmcli connection modify "Admin_TBS" connection.autoconnect yes
+
