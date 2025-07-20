@@ -17,7 +17,7 @@ if [ "$numPics" -gt "1" ]; then
     cd $dataDIR/Studio
 
     # Get the first filname
-    earliestFile=`ls -t *.jpg | head -1`
+    earliestFile=`ls -t *.jpg | tail -1`
 
     # Convert to datestamp ########################################
 
