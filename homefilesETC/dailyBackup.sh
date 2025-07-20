@@ -87,6 +87,6 @@ status=$?
 if [ $status = 1 ]; then
 
    # Make the movie
-   movieMaker.sh $backupDIR
+   movieMaker.sh $backupDIR $datestamp
 
 fi

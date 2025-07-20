@@ -25,3 +25,4 @@ sudo cp etcsystemdsystem-dockerDUFs.service /etc/systemd/system/dockerDUFs.servi
 sudo systemctl daemon-reload
 sudo systemctl enable dockerDUFs.service
 
+sudo iwlist wlan1 scan | grep SSID

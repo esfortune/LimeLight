@@ -3,9 +3,11 @@
 # This relies on the "parallel" command.
 
 workingDIR=$1
+datestamp=$2
 location=$(head -1 /home/canopylife/location.txt | tr -cd '[:alnum:]')
 serial=$(head -1 /home/canopylife/serialNumber.txt | tr -cd '[:alnum:]')
-datestamp=$(date +"%Y%b%d")
+
+# datestamp=$(date +"%Y%b%d")
 
 if [ -d "$workingDIR" ]; then
 
