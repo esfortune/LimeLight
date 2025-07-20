@@ -1,0 +1,36 @@
+sudo nmcli connection add type wifi ifname wlan0 con-name "MyWiFi" ssid "MyWiFi"
+
+sudo nmcli connection modify "MyWiFi" wifi-sec.key-mgmt wpa-psk
+sudo nmcli connection modify "MyWiFi" wifi-sec.psk "MyPassword"
+
+sudo nmcli connection modify "MyWiFi" connection.autoconnect yes
+
+Configuring your Raspberry Pi to automatically join a Wi-Fi network when in
+range using nmcli (NetworkManager command-line interface) is straightforward.
+Here's how you can achieve this: 
+
+Add the Wi-Fi connection:
+    sudo nmcli connection add type wifi ifname wlan0 con-name "MyWiFi" ssid "MyWiFi"
+
+ifname wlan0: Specifies the Wi-Fi interface (usually wlan0 on Raspberry Pi).
+con-name "MyWiFi": Assigns a name to the connection (you can use any name you
+like).  ssid "MyWiFi": Sets the SSID (network name) of your Wi-Fi network.  
+
+Set the WPA2 password:
+
+    sudo nmcli connection modify "MyWiFi" wifi-sec.key-mgmt wpa-psk
+    sudo nmcli connection modify "MyWiFi" wifi-sec.psk "MyPassword"
+
+wifi-sec.key-mgmt wpa-psk: Specifies WPA2-PSK as the security protocol.
+wifi-sec.psk "MyPassword": Sets the Wi-Fi password (replace "MyPassword" with your actual password).
+
+Ensure autoconnect is enabled:
+    sudo nmcli connection modify "MyWiFi" connection.autoconnect yes
+
+
+
+sudo nmcli connection up "MyWiFi"
+
+
+sudo iwlist wlan1 scan | grep SS
+
