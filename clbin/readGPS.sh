@@ -68,4 +68,4 @@ fi
 echo "$timestamp,$latitude,$longitude,$altitude" >> "$OUTPUT"
 
 echo "Logged: $timestamp, $latitude, $longitude, $altitude"
-U-Blox AG [u-blox 7]
+# U-Blox AG [u-blox 7]

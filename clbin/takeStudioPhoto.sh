@@ -4,7 +4,7 @@
 
 # This is a simple script to capture a Studio Photo. To do this, we cycle
 # the attractor and Studio LED lights. 
-# Photo is captured using libcamera. Photos are named
+# Photo is captured using rpicam. Photos are named
 # using the "datetime" option, and an entry is made in the data log.
 # Relies on location + serialNumber files and config.py
 
@@ -57,8 +57,8 @@ sleep 3
 #########################################################################
 # Capture the photo
 
-# libcamera-still -n --datetime --autofocus-range macro 
-libcamera-still -n --datetime --autofocus-mode manual --lens-position 7 --sharpness 2 --exposure sport
+# rpicam-still -n --datetime --autofocus-range macro 
+rpicam-still -n --datetime --autofocus-mode manual --lens-position 7 --sharpness 2 --exposure sport
 filename=`ls -t *.jpg | head -1`
 
 sleep 1

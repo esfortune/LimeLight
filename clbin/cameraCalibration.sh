@@ -38,7 +38,7 @@ sleep 2
 for pos in $(seq 6.6 0.2 8.4); do
 
   echo "Capturing with lens-position: $pos"
-  libcamera-still -n --datetime --autofocus-mode manual --lens-position "$pos" --sharpness 2 --exposure sport
+  rpicam-still -n --datetime --autofocus-mode manual --lens-position "$pos" --sharpness 2 --exposure sport
   sleep 1
 
   filename=`ls -t *.jpg | head -1`
