@@ -1,0 +1,6 @@
+# Take GPS every evening before sampling
+1 17 * * * /home/canopylife/bin/takeGPS.sh >> /home/canopylife/data/curdat/errorlog.txt 2>&1
+2 17 * * * /home/canopylife/bin/readGPS.sh >> /home/canopylife/data/curdat/errorlog.txt 2>&1
+
+# Take Audio samples every 5 minutes
+*/5 * * * * /home/canopylife/bin/takeAudioSample.sh >> /home/canopylife/data/curdat/errorlog.txt 2>&1
