@@ -1,35 +1,53 @@
 import time
 import numpy as np
 import struct
-from ADS1256 import ADS1256
+from ADS1263 import ADS1263
 
-def log_ads1256_binary(channel=0, sample_rate=10000, num_samples=20000, bin_filename="samples.bin"):
+def log_ads1263_continuous(
+    channel=0,
+    sample_rate=10000,
+    num_samples=20000,
+    chunk_size=1000,
+    bin_filename="samples.bin"
+):
     """
-    High-speed logger: collect data at ~10kHz and store in binary file.
-    Format: each record = (timestamp: float64, adc_value: int32)
+    Continuous logger with chunked writes.
+    Each record = (timestamp: float64, adc_value: int32)
     """
-    ads = ADS1256()
-    ads.ADS1256_init()
-    ads.ADS1256_SetChannal(channel)
+    ads = ADS1263()
+    ads.ADS1263_init()
+    ads.ADS1263_SetChannal(channel)
 
     interval = 1.0 / sample_rate
     record_size = struct.calcsize("di")  # double + int32
-    buffer = bytearray(num_samples * record_size)
+    buffer = bytearray(chunk_size * record_size)
 
-    print(f"Logging {num_samples} samples at {sample_rate} Hz to {bin_filename}...")
+    print(f"Logging {num_samples} samples at {sample_rate} Hz into {bin_filename}...")
     start_time = time.perf_counter()
 
-    for i in range(num_samples):
-        t = time.perf_counter()
-        value = ads.ADS1256_GetChannalValue(channel)
-        struct.pack_into("di", buffer, i * record_size, t, value)
-
-        next_time = start_time + (i + 1) * interval
-        while time.perf_counter() < next_time:
-            pass  # busy wait
-
     with open(bin_filename, "wb") as f:
-        f.write(buffer)
+        for i in range(num_samples):
+            t = time.perf_counter()
+            value = ads.ADS1263_GetChannalValue(channel)
 
-    print(f"Done. File saved: {bin_filename} ({len(buffer)} bytes)")
+            # pack sample into buffer
+            struct.pack_into("di", buffer, (i % chunk_size) * record_size, t, value)
+
+            # flush buffer when full
+            if (i + 1) % chunk_size == 0:
+                f.write(buffer)
+                f.flush()
+
+            # timing loop
+            next_time = start_time + (i + 1) * interval
+            while time.perf_counter() < next_time:
+                pass
+
+        # write leftover samples (if not a multiple of chunk_size)
+        leftover = (num_samples % chunk_size) * record_size
+        if leftover > 0:
+            f.write(buffer[:leftover])
+            f.flush()
+
+    print(f"Done. File saved: {bin_filename}")
 
