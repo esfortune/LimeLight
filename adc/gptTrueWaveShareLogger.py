@@ -1,9 +1,12 @@
+% September2025 Single channel at up to about 4kHz sample rates
+% FINALLY
+
 import time
 import struct
 from ADS1263 import ADS1263
 
 channel=0
-target_rate=2000         # Hz (suggest 2000 or 2500 for Pi)
+target_rate=3000         # Hz (suggest 2000 or 2500 for Pi)
 num_samples=20000
 chunk_size=1000
 bin_filename="samples.bin"
@@ -14,8 +17,10 @@ Log ADS1263 data with *true timing*.
 - Records actual timestamp with each sample.
 - Each record = (timestamp: float64, adc_value: int32).
 """
+
 ads = ADS1263()
 ads.ADS1263_init_ADC1()
+ads.ADS1263_SetMode(0)
 ads.ADS1263_SetChannal(channel)
 
 interval = 1.0 / target_rate
