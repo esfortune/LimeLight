@@ -7,7 +7,7 @@
 
 dataDIR=`grep data_path /home/canopylife/bin/config.py | sed -n "s/^.*'\(.*\)'.*$/\1/p"`
 
-numPics=`clImages.sh | sed 's/[^0-9]*//g'`
+numPics=`/home/canopylife/bin/clImages.sh | sed 's/[^0-9]*//g'`
 
 echo $dataDIR $numPics
 
@@ -151,6 +151,6 @@ status=$?
 if [ $status = 1 ]; then
 
    # Make the movie
-   movieMaker.sh $backupDIR $datestamp
+   /home/canopylife/bin/movieMaker.sh $backupDIR $datestamp
 
 fi
