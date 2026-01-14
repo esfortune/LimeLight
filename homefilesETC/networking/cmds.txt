@@ -1,3 +1,7 @@
+# Command Line add WiFi connection:
+sudo nmcli --ask device wifi connect "Your_SSID" ifname wlan1
+
+
 nmcli -t -f SSID dev wifi list ifname wlan1
 
 
