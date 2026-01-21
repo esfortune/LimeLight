@@ -139,7 +139,6 @@ echo $backupDIR
 #    fi
 ################
 
-fi
 
 ######################################################################################
 ## Check to see the position of the switch. If it is 1, then we are in "standard" mode
@@ -152,5 +151,7 @@ if [ $status = 1 ]; then
 
    # Make the movie
    /home/canopylife/bin/movieMaker.sh $backupDIR $datestamp
+
+fi
 
 fi
