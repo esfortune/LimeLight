@@ -2,12 +2,15 @@
 
 # automerger.py is a craptastic tool to merge two slightly overlapping 
 # images for the Galago device. It relies on cv2 and numpy - using a
-# python in a virtual environment.
+# python in a virtual environment. If using this somewhere else (I don't
+# recommend that!) then you will need to edit the top line.
 #
 # Usage: automerger.py ImageRightMerge ImageLeftMerge
 # where ImageRightMerge is usually camera 0 and the other is camera 1
 # Saves the merged image to /tmp/merged_result.jpg
 #
+# ChatGPT helped with warping and such.  Which is part of the reason
+# this code is arful.
 
 import cv2
 import numpy as np
@@ -24,6 +27,8 @@ def merge_overlapping(imgMR_path, imgML_path, output="/tmp/merged_result.jpg"):
     if img2 is None:
         print(f"Error: Could not load image: {img2_path}")
         sys.exit(1)
+
+    # ChatGPT did these 7 steps
 
     # Convert to grayscale
     gray1 = cv2.cvtColor(img1, cv2.COLOR_BGR2GRAY)
@@ -67,7 +72,7 @@ def merge_overlapping(imgMR_path, imgML_path, output="/tmp/merged_result.jpg"):
 
 
 # --------------------------
-#      Command Line Use
+#      Command Line Usage and Use
 # --------------------------
 if __name__ == "__main__":
     if len(sys.argv) != 3:

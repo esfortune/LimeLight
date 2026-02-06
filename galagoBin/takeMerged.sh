@@ -47,3 +47,10 @@ if [ -f /tmp/C0-$timestamp.jpg ]; then
     fi
 fi
 
+
+# A major problem with this script is that it saves the data into the
+# $pwd. It should accept an argument for where to put the final images.
+# Another point of failure is when the automerger.py script doesn't work.
+# Need to add error catching there and frankly, replace the Python
+# script for merging with something better.
+
