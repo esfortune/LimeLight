@@ -217,6 +217,21 @@ def set_location():
     except Exception as e:
         return f'Failed to save location: {e}', 500
 
+@app.route('/set-timezone', methods=['POST'])
+def set_timezone():
+    data = request.get_json()
+    timezone = data.get('timezone', '')
+
+    # Validate against allowed IANA timezone format (e.g. "America/New_York", "UTC")
+    if not re.match(r'^[A-Za-z]+(/[A-Za-z0-9_\-+]+)*$', timezone):
+        return jsonify({"status": "error", "message": "Invalid timezone format."}), 400
+
+    try:
+        subprocess.run(["sudo", "timedatectl", "set-timezone", timezone], check=True)
+        return jsonify({"status": "success", "message": f"Time zone set to {timezone}."})
+    except subprocess.CalledProcessError as e:
+        return jsonify({"status": "failure", "message": f"Failed to set timezone: {e.stderr.strip() if e.stderr else str(e)}"}), 500
+
 @app.route('/set-gps', methods=['POST'])
 def set_gps():
     data = request.get_json()
