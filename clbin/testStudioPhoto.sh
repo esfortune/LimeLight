@@ -45,11 +45,16 @@ cd $DIR
 #########################################################################
 ## Switch LED lights for PHOTO
 
-gpioset gpiochip0 $panelON=1            # Set Panel On (high)
-gpioset gpiochip0 $attractorOFF=1       # Set Attractor Off (high)
-sleep 1
-gpioset gpiochip0 $panelON=0            # Set Panel On (low)
-gpioset gpiochip0 $attractorOFF=0       # Set Attractor (low)
+## OLD METHOD
+# gpioset gpiochip0 $panelON=1            # Set Panel On (high)
+# gpioset gpiochip0 $attractorOFF=1       # Set Attractor Off (high)
+# sleep 1
+# gpioset gpiochip0 $panelON=0            # Set Panel On (low)
+# gpioset gpiochip0 $attractorOFF=0       # Set Attractor (low)
+
+## NEW METHOD
+gpioset --chip gpiochip0 --toggle 200ms,0 $panelON=1   # Pulse GPIO high for 200ms then low
+gpioset --chip gpiochip0 --toggle 200ms,0 $attractorOFF=1   # Pulse GPIO high for 200ms then low
 
 # Sleep 3 seconds to ensure that the lights are stable
 sleep 3
@@ -74,16 +79,26 @@ echo $location", "$serialNum", Studio, "$newFilename", OwlSight, 4624x3472"
 #########################################################################
 ## Switch LED lights for ATTRACTION
 
-gpioset gpiochip0 $attractorON=1         # Set GPIO 16 to high (3.3V)
-gpioset gpiochip0 $panelOFF=1            # Set GPIO 12 to low (0V)
-sleep 1
-gpioset gpiochip0 $attractorON=0         # Set GPIO 16 to high (3.3V)
-gpioset gpiochip0 $panelOFF=0            # Set GPIO 12 to low (0V)
+## OLD METHOD
+# gpioset gpiochip0 $attractorON=1         # Set GPIO 16 to high (3.3V)
+# gpioset gpiochip0 $panelOFF=1            # Set GPIO 12 to low (0V)
+# sleep 1
+# gpioset gpiochip0 $attractorON=0         # Set GPIO 16 to high (3.3V)
+# gpioset gpiochip0 $panelOFF=0            # Set GPIO 12 to low (0V)
+
+## NEW METHOD
+gpioset --chip gpiochip0 --toggle 200ms,0 $panelOFF=1   # Pulse GPIO high for 200ms then low
+gpioset --chip gpiochip0 --toggle 200ms,0 $attractorON=1   # Pulse GPIO high for 200ms then low
 
 #########################################################################
 ## Turn off Attractor light after 5 seconds
 sleep 5
-gpioset gpiochip0 $attractorOFF=1       # Set Attractor Off (high)
-sleep 1
-gpioset gpiochip0 $attractorOFF=0       # Set Attractor (low)
+
+## OLD METHOD
+# gpioset gpiochip0 $attractorOFF=1       # Set Attractor Off (high)
+# sleep 1
+# gpioset gpiochip0 $attractorOFF=0       # Set Attractor (low)
+
+## NEW METHOD
+gpioset --chip gpiochip0 --toggle 200ms,0 $attractorOFF=1   # Pulse GPIO high for 200ms then low
 
