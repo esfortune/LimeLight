@@ -19,6 +19,17 @@ https://forums.raspberrypi.com/viewtopic.php?t=294588
 INSTALL DOCKER 
 
 curl -sSL https://get.docker.com | sh
+
+Then... 
+    dockerd-rootless-setuptool.sh install
+Which requires...
+sudo sh -eux <<EOF
+# Install newuidmap & newgidmap binaries
+apt-get install -y uidmap
+EOF
+
+
+
 sudo docker pull gristlabs/grist
 
 HOTSPOT SETUP
