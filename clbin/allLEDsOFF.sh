@@ -15,11 +15,11 @@ panelOFF=`grep studioOFF_gpio /home/canopylife/bin/config.py | sed 's/[^0-9]//g'
 # The pulse is 1 second in duration - we use the sleep command.
 
 ## OLD SYNTAX UP TO 2025
-gpioset gpiochip0 $panelOFF=1             # Set GPIO high 
-gpioset gpiochip0 $attractorOFF=1         # Set GPIO high
-sleep 1
-gpioset gpiochip0 $panelOFF=0             # Set GPIO to low
-gpioset gpiochip0 $attractorOFF=0         # Set GPIO to low
+# gpioset gpiochip0 $panelOFF=1             # Set GPIO high 
+# gpioset gpiochip0 $attractorOFF=1         # Set GPIO high
+# sleep 1
+# gpioset gpiochip0 $panelOFF=0             # Set GPIO to low
+# gpioset gpiochip0 $attractorOFF=0         # Set GPIO to low
 
 ## NEW SYNTAX SINCE 2026
 gpioset --chip gpiochip0 --toggle 200ms,0 $panelOFF=1   # Pulse GPIO high for 200ms then low
