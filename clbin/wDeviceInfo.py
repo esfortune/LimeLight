@@ -17,7 +17,8 @@ deviceLocation = "Location: " + c.deviceLocation
 deviceGPS = "GPS: " + c.deviceGPS + "\n"
 
 timestamp = time.strftime('%d%b%Y-%H:%M:%S')
-printTime = "Device Time: " + timestamp + "\n"
+# printTime = "Device Time: " + timestamp + "\n"
+printTime = "Device Time: " + timestamp 
 
 diskTotal, diskUsed, diskFree = shutil.disk_usage("/")
 
@@ -26,7 +27,7 @@ diskUsage = str(round(diskTotal / (1024**3))) + "Gb, " + str(round(diskUsed / (1
 diskPerCentRemaining = "Percent Free:  " + str(round((diskFree / diskTotal) * 100)) + " %"
 
 tzResult = subprocess.run(["cat", "/etc/timezone"], capture_output=True, text=True)
-timeZone = "Time Zone: " + tzResult.stdout.strip()
+timeZone = "Device TimeZone: " + tzResult.stdout.strip() + "\n"
 
 currentMode = subprocess.run([c.checkMode], capture_output=True, text=True)
 if currentMode.returncode == 1:
@@ -44,3 +45,4 @@ print(f"{diskUsage}, {diskPerCentRemaining}")
 
 # ledBlink.kill()
 # ledBlink = subprocess.Popen([statusLED, '6'])
+

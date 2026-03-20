@@ -35,7 +35,6 @@
 
     <div class="color-bar"></div>
 
-<br>You can configure the MothPad below.<p>
 <p align="left">
 A new install <b>WITH INTERNET</b> needs at least three items:<br>
 <pre align="left">
@@ -69,6 +68,9 @@ A new install <b>WITH INTERNET</b> needs at least three items:<br>
         <pre id="current-crontab" style="background:#eee; padding: 1em; margin-top: 1em; font-size: 16px; text-align: left"></pre>
     </div>
 
+    <div>
+        <button class="button1" onclick="window.open('http://192.168.4.1:5000/', '_blank')">Open Data Explorer</button>
+    </div>
 
     <div class="color-bar"></div>
 
@@ -566,6 +568,11 @@ A new install <b>WITH INTERNET</b> needs at least three items:<br>
     <div>
         <button class="button1" id="script-takeAudio" onclick="runScript('script-takeAudio')">Record Audio Sample</button>
         <p id="output-script-takeAudio" class="output"></p>
+    </div>
+
+    <div>
+        <button class="button1" id="script-camCalibration" onclick="runScript('script-camCalibration')">Camera Calibration</button>
+        <p id="output-script-camCalibration" class="output"></p>
     </div>
 
     <div class="color-bar"></div>

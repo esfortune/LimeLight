@@ -34,7 +34,9 @@ SCRIPTS = {
     "script3": "/home/canopylife/bin/allLEDsOFF.sh",
     "script4": "/home/canopylife/bin/testStudioPhoto.sh",
     "script5": "/home/canopylife/bin/msgDate.sh",
-    "script6": "/home/canopylife/bin/checkMode.py"
+    "script6": "/home/canopylife/bin/checkMode.py",
+    "script-takeAudio": "/home/canopylife/bin/takeAudio.sh",
+    "script-camCalibration": "/home/canopylife/bin/cameraCalibration.sh"
 }
 
 @app.route("/")
