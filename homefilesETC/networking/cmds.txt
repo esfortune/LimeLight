@@ -30,3 +30,19 @@ sudo systemctl daemon-reload
 sudo systemctl enable dockerDUFs.service
 
 sudo iwlist wlan1 scan | grep SSID
+
+##### Claude added WiFi switching
+
+  sudo cp usrlocalbin-switchMonitor.py /usr/local/bin/switchMonitor.py
+  sudo chmod +x /usr/local/bin/switchMonitor.py                                                                                
+  sudo cp etcsystemdsystem-switchMonitor.service /etc/systemd/system/switchMonitor.service
+  sudo systemctl daemon-reload                                                                                                 
+  sudo systemctl enable --now switchMonitor.service         
+
+
+### Claude remote cron tasks
+
+  30 1 * * * /home/canopylife/bin/cloudBackup.sh >> /home/canopylife/logs/cloudBackup.log 2>&1
+
+  0 2 * * 0 /home/canopylife/bin/cloudBackupFull.sh >> /home/canopylife/logs/cloudBackupFull.log 2>&1
+

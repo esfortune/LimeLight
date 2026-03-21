@@ -1,4 +1,4 @@
-nohup rclone copy --no-traverse /home/arducam/data/Jotta/03-24-2025 CanopyLife:MothPadData/117608014/03242025 &
+nohup rclone copy /home/arducam/data/Jotta/CURENTDATE CanopyLife:MothPadData/SERIALNUMBER/CURRENTDATE &
+# nohup rclone copy /home/arducam/data/Jotta/2026Mar16 CanopyLife:MothPadData/LR_Malthus/2026Mar16 &
 
-rclone copy --max-age 24h --no-traverse /path/to/src remote:
 

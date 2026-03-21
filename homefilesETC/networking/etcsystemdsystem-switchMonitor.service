@@ -1,0 +1,13 @@
+[Unit]
+Description=Monitor mode switch and control WiFi AccessPoint
+After=dualWifi.service
+Requires=NetworkManager.service
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/switchMonitor.py
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

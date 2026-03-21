@@ -39,11 +39,8 @@ fi
 
 
 else
-     # The switch calls for us to be in DARK mode, so do nothing but let the user know.
-     rfkill block wlan
-     timeout 2 /home/canopylife/bin/statusBlinker.py 1 
-     /home/canopylife/bin/statusBlinker.py 6
-
-     logger "[wifi_dual_mode] Low power mode - used rfkill to turn off wlan interfaces"
-     /home/canopylife/bin/statusBlinker.py 6
+     # Switch is down - bring down the AccessPoint on wlan0 only.
+     # wlan1 and eth0 remain unaffected.
+     nmcli connection down AccessPoint 2>/dev/null || true
+     logger "[wifi_dual_mode] Switch down - AccessPoint on wlan0 brought down"
 fi

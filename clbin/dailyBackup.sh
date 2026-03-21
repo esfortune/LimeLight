@@ -141,17 +141,8 @@ echo $backupDIR
 
 
 ######################################################################################
-## Check to see the position of the switch. If it is 1, then we are in "standard" mode
-## and we should make the timelapse movie.
+## Make the timelapse movie from the backed-up images.
 
-/home/canopylife/bin/checkMode.py
-status=$?
-
-if [ $status = 1 ]; then
-
-   # Make the movie
-   /home/canopylife/bin/movieMaker.sh $backupDIR $datestamp
-
-fi
+/home/canopylife/bin/movieMaker.sh $backupDIR $datestamp
 
 fi
