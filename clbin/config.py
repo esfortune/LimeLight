@@ -1,10 +1,10 @@
 #!/usr/bin/python
-# Copyright Eric Fortune, CanopyLife, April 2025
+# Copyright Eric Fortune, CanopyLife, June 2025
 # Code written for MothPad device.
 
 
-# Setting the serial number as the RustDesk identity
-# /home/canopylife/serialNumber.txt only has 9 digit RustDesk number
+#######################################
+# Set the serial number 
 
 try:
     with open("/home/canopylife/serialNumber.txt", "r") as file:
@@ -13,12 +13,18 @@ except FileNotFoundError:
     # If the file does not exist, use a default serial number
     deviceSerial = "001100110"
 
+#######################################
+# Set the location 
+
 try:
     with open("/home/canopylife/location.txt", "r") as file:
         deviceLocation = file.readline().strip()
 except FileNotFoundError:
     # If the file does not exist, use a default location
     deviceLocation = "LocationIsNotSet"
+
+#######################################
+# Set the Lat/Long (gps)
 
 try:
     with open("/home/canopylife/gps.txt", "r") as file:
@@ -27,20 +33,23 @@ except FileNotFoundError:
     # If the file does not exist, use a default location
     deviceGPS = "00d 00m S 00d 00m W"
 
+#######################################
+# Set the paths on the MothPad device
 
 ### Paths
 
 base_path = '/home/canopylife'
 bin_path = '/home/canopylife/bin'
 data_path = '/home/canopylife/data/curdat'
-backup_path = '/home/canopylife/data/backups'
+backup_path = '/home/canopylife/data/Jotta'
 
 pause_data_collection = '/home/canopylife/tokens/dataPause.txt'
 wifiPathName = '/home/canopylife/tokens/wifiStatus.txt'
 env_csvfile = '/home/canopylife/data/curdat/ENVdata.csv'
 datalogfile = '/home/canopylife/data/curdat/dataLog.csv'
 
-### Helper programs
+#######################################
+# Helper programs
 
 samplePhoto = '/home/canopylife/bin/takeStudioPhoto.sh' # Photograph (also controls LEDs)
 sampleAudio = '/home/canopylife/bin/takeAudioSample.sh' # Audio Sample (ultrasonic microphone)
@@ -56,7 +65,8 @@ checkMode = '/home/canopylife/bin/checkMode.py' # Decides whether we are in COLL
 statusLED = '/home/canopylife/bin/statusBlinker.py'
 eINKupdate = '/home/canopylife/bin/eINKstatus.py'
 
-### Which GPIO pins will we use?
+#######################################
+# Which GPIO pins will we use?
 
 attractorON_gpio = 16                                 # LEDs to attract moths ON
 attractorOFF_gpio = 13                                # LEDs to attract moths OFF
@@ -65,6 +75,7 @@ studioOFF_gpio = 6                                    # LEDs for photographs OFF
 
 switch_gpio = 23                                      # User switch for COLLECT or DOWNLOAD modes
 
+#######################################
 ### Which data do we want to collect for default? (1 for yes, 0 for no)
 
 data_audio = 0
