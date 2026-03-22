@@ -31,7 +31,7 @@ try:
         deviceGPS = file.readline().strip()
 except FileNotFoundError:
     # If the file does not exist, use a default location
-    deviceGPS = "00d 00m S 00d 00m W"
+    deviceGPS = "Location not set"
 
 #######################################
 # Set the paths on the MothPad device
