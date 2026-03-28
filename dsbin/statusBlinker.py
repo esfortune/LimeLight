@@ -10,28 +10,34 @@ from time import sleep
 import board
 import adafruit_dotstar as dotstar
 
-pixels = dotstar.DotStar(board.SCK, board.MOSI, 1, brightness=1.0)
+pixels = dotstar.DotStar(board.SCK, board.MOSI, 1, brightness=1.0, pixel_order=dotstar.RGB)
 
 def blinking_slowPURPLE(): # A slower purple blinking that asks the user to intervene
     while True:
-        pixels.fill(0x800080)
-        sleep(0.02)  # 20ms on
+        pixels.fill(0xffff00) # Color Purple
+        sleep(0.2)  # 200ms on
         pixels.fill(0x000000)
         sleep(1.00)  # 1 second off
 
 def blinking_fastGREEN(): # Fast green blinking as if machine is working
     while True:
-        pixels.fill(0x008000)
-        sleep(0.05)
+        pixels.fill(0x000080) # Color Green
+        #pixels.fill(0x008000)
+        sleep(0.15)
         pixels.fill(0x000000)
-        sleep(0.05)
+        sleep(0.15)
 
-def blinking_fastRED(): # Fast red blinking as if machine is working
-    while True:
-        pixels.fill(0xff0000)
-        sleep(0.05)
+def blinking_fastRED(): # Fast red blinking for 60 seconds then exits cleanly
+    import time
+    end_time = time.time() + 60
+    while time.time() < end_time:
+        pixels.fill(0xff0000) # Color Red
+        sleep(0.15)
         pixels.fill(0x000000)
-        sleep(0.05)
+        sleep(0.15)
+    pixels.fill(0x000000)
+    sleep(0.1)
+    pixels.fill(0x000000)
 
 def blinking_doubletsRED(): # Double red blink that is definitely an error
     while True:
@@ -53,10 +59,10 @@ def blink_fourRED(): # Four long red blinks to tell you to reset
         sleep(1)
         jj += 1
 
-def blink_fourGREEN(): # Four long green blinks to tell you all is OK
+def blink_fourBLUE(): # Four long blue blinks to tell you all is OK
     jj = 0
     while jj < 4:
-        pixels.fill(0x008000)
+        pixels.fill(0x008000) # Color Blue
         sleep(1)
         pixels.fill(0x000000)
         sleep(1)
@@ -81,7 +87,7 @@ def main():
     elif sys.argv[1] == '3':
         blinking_fastRED()
     elif sys.argv[1] == '4':
-        blink_fourGREEN()
+        blink_fourBLUE()
     elif sys.argv[1] == '5':
         blink_fourRED()
     elif sys.argv[1] == '6':
@@ -89,3 +95,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
