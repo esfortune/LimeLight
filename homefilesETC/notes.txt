@@ -61,10 +61,12 @@ bin/pip3 install rpi-lgpio
 Install NeoPixel control
 
 sudo apt install swig
+sudo apt install liblgpio-dev
+
 python3 -m venv neopixel
 source neopixel/bin/activate
-pip install adafruit-dotstar
-pip install board
+pip install adafruit-circuitpython-dotstar
+pip install board lgpio
 deactivate
 
 Install Stemma sensors
