@@ -1,22 +1,30 @@
-# Get and set the serial number
+ 
+##############################################################################################
+# Get and set the serial number automagically ##################################### Depricated
 
 cat /proc/cpuinfo  | grep Serial | sed -E 's/^[^:]*:\s*([^\s]{9}).*/\1/' > ~/serialNumber.txt
 
+##############################################################################################
 APT INSTALL STUFF
 
-sudo apt install libjpeg-turbo-progs parallel fbi links ffmpeg dkms rclone
+sudo apt install libjpeg-turbo-progs parallel fbi links ffmpeg dkms rclone tmux
 
+##############################################################################################
 # PyEnvs
+mkdir ~/PyEnvs
+cd ~/PyEnvs
 python -m venv webby
 pip install flask waitress
 
+##############################################################################################
 # local display on RPi HDMI in an ssh shell
 sudo fbi --autozoom --noverbose --vt 1 test.png
 
 # Ghost monitor adaptor
 https://forums.raspberrypi.com/viewtopic.php?t=294588
 
-INSTALL DOCKER 
+##############################################################################################
+INSTALL DOCKER ###############################################################################
 
 curl -sSL https://get.docker.com | sh
 
@@ -28,11 +36,10 @@ sudo sh -eux <<EOF
 apt-get install -y uidmap
 EOF
 
-
-
 sudo docker pull gristlabs/grist
 
-HOTSPOT SETUP
+##############################################################################################
+HOTSPOT SETUP ###################################################################For Info Only
 
 https://raspberrytips.com/access-point-setup-raspberry-pi/
 
@@ -43,13 +50,15 @@ sudo nmcli con modify hotspot wifi-sec.psk "raspberry"
 
 sudo nmcli con modify hotspot 802-11-wireless.mode ap 802-11-wireless.band bg ipv4.method shared
 
-DUFS WEB INTERFACE
+##############################################################################################
+DUFS WEB INTERFACE ###########################################################################
 
 sudo docker pull sigoden/dufs
 mkdir ~/data
 sudo docker run -v /home/canopylife/data:/data -p 5000:5000 --rm sigoden/dufs /data -A
 
-Install eINK display
+##############################################################################################
+Install eINK display ############################################################## Depricated
 
 python3 -m venv eINK
 cd eINK
@@ -58,53 +67,84 @@ bin/pip3 install adafruit-circuitpython-epd
 bin/pip3 install Adafruit-Blinka
 bin/pip3 install rpi-lgpio
 
-Install NeoPixel control
+##############################################################################################
+Install NeoPixel control #####################################################################
 
 sudo apt install swig
 sudo apt install liblgpio-dev
 
+cd ~/PyEnvs
 python3 -m venv neopixel
 source neopixel/bin/activate
 pip install adafruit-circuitpython-dotstar
 pip install board lgpio
 deactivate
 
-Install Stemma sensors
+The code uses board.SCK and board.MOSI, which are the hardware SPI pins.
+Here's the wiring for an Adafruit DotStar 5050 RGB LED to a Raspberry Pi 5:
+
+  DotStar Wiring — RPi 5
+
+  ┌───────────────┬────────────────────┬────────────────┬────────────────────────┐
+  │  DotStar Pin  │     RPi 5 Pin      │      GPIO      │         Notes          │
+  ├───────────────┼────────────────────┼────────────────┼────────────────────────┤
+  │ CI (Clock In) │ Pin 23             │ GPIO 11 (SCLK) │ SPI0 Clock = board.SCK │
+  ├───────────────┼────────────────────┼────────────────┼────────────────────────┤
+  │ DI (Data In)  │ Pin 19             │ GPIO 10 (MOSI) │ SPI0 Data = board.MOSI │
+  ├───────────────┼────────────────────┼────────────────┼────────────────────────┤
+  │ VCC           │ Pin 1 or 17        │ —              │ 3.3V power             │
+  ├───────────────┼────────────────────┼────────────────┼────────────────────────┤
+  │ GND           │ Pin 6, 9, 14, etc. │ —              │ Ground                 │
+  └───────────────┴────────────────────┴────────────────┴────────────────────────┘
+
+Power note: The DotStar 5050 can run on 3.3V from the Pi header for a single
+LED at moderate brightness. If you add more LEDs or run at full brightness, use
+a 5V supply (Pin 2 or 4) — but note the data lines are 3.3V logic, which is
+fine for the APA102 driver used in DotStars.
+
+  Make sure SPI is enabled:
+  sudo raspi-config  # Interface Options → SPI → Enable
+
+  Or add to /boot/firmware/config.txt:
+  dtparam=spi=on
+
+##############################################################################################
+Install Stemma sensors ############################################################ Depricated
 
 python3 -m venv Stemma
 cd Stemma
 bin/pip3 install adafruit_bme280
 bin/pip3 install adafruit_circuitpython_mpu6050
 
-
-
-
-GPS HAT SETUP
+##############################################################################################
+GPS HAT SETUP ##################################################################### Depricated
 
 sudo raspi-config
 serial port not monitor, serial port active
 
-EDITS TO /boot/firmware/config.txt FOR NVME AND OwlSight
+##############################################################################################
+EDITS TO /boot/firmware/config.txt FOR NVME AND OwlSight #####################################
+
 dtparam=nvme
 dtparam=pciex1_gen=3
 dtoverlay=ov64a40,link-frequency=360000000
 camera_auto_detect=0
 dtparam=uart0=on
 
+[all]
+dtparam=nvme
+dtparam=pciex1_gen=3
+camera_auto_detect=0
+dtoverlay=ov64a40,cam0,link-frequency=360000000
+dtoverlay=disable-bt
+
+
+##############################################################################################
 ONBOARD MEASURE TEMPERATURE
 vcgencmd measure_temp
 
+##############################################################################################
 MORE DOCKER STUFF
-
-Created symlink /home/canopylife/.config/systemd/user/default.target.wants/docker.service → /home/canopylife/.config/systemd/user/docker.service.
-[INFO] Installed docker.service successfully.
-[INFO] To control docker.service, run: `systemctl --user (start|stop|restart) docker.service`
-[INFO] To run docker.service on system startup, run: `sudo loginctl enable-linger canopylife`
-
-[INFO] Creating CLI context "rootless"
-Successfully created context "rootless"
-[INFO] Using CLI context "rootless"
-Current context is now "rootless"
 
 [INFO] Make sure the following environment variable(s) are set (or add them to ~/.bashrc):
 export PATH=/usr/bin:$PATH
@@ -112,5 +152,4 @@ export PATH=/usr/bin:$PATH
 [INFO] Some applications may require the following environment variable too:
 export DOCKER_HOST=unix:///run/user/1000/docker.sock
 
-canopylife@raspberrypi:~ $ vi .bashrc 
-canopylife@raspberrypi:~ $ dockerd-rootless-setuptool.sh install
+dockerd-rootless-setuptool.sh install

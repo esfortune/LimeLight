@@ -1,9 +1,11 @@
-# Command Line add WiFi connection:
+############################################################################
+# Command Line add WiFi connection: ############################## Info only
 sudo nmcli --ask device wifi connect "Your_SSID" ifname wlan1
-
 
 nmcli -t -f SSID dev wifi list ifname wlan1
 
+############################################################################
+# Install and set up the Dual WiFi.  Edit dualWifi.sh ######################
 
 sudo cp usrlocalbin-dualWifi.sh /usr/local/bin/dualWifi.sh
 sudo cp etcsystemdsystem-dualWifi.service /etc/systemd/system/dualWifi.service
@@ -12,6 +14,9 @@ sudo systemctl daemon-reexec
 sudo systemctl daemon-reload
 sudo systemctl enable dualWifi.service
 
+
+############################################################################
+# Install the local web server #############################################
 
 sudo cp etcsystemdsystem-startFlask.service /etc/systemd/system/startFlask.service
 sudo cp usrlocalbin-startFlask.sh /usr/local/bin/startFlask.sh
@@ -22,6 +27,8 @@ sudo systemctl start startFlask.service
 
 sudo systemctl restart startFlask.service
 
+############################################################################
+# Install the local file server ############################################
 
 sudo cp usrlocalbin-dockerDUFs.sh /usr/local/bin/dockerDUFs.sh
 sudo cp etcsystemdsystem-dockerDUFs.service /etc/systemd/system/dockerDUFs.service
@@ -29,9 +36,11 @@ sudo cp etcsystemdsystem-dockerDUFs.service /etc/systemd/system/dockerDUFs.servi
 sudo systemctl daemon-reload
 sudo systemctl enable dockerDUFs.service
 
+############################################################################
 sudo iwlist wlan1 scan | grep SSID
 
-##### Claude added WiFi switching
+############################################################################
+# Install the WiFi switching monitor (Claude written) ######################
 
   sudo cp usrlocalbin-switchMonitor.py /usr/local/bin/switchMonitor.py
   sudo chmod +x /usr/local/bin/switchMonitor.py                                                                                
@@ -40,7 +49,8 @@ sudo iwlist wlan1 scan | grep SSID
   sudo systemctl enable --now switchMonitor.service         
 
 
-### Claude remote cron tasks
+############################################################################
+### Claude remote cron tasks ### Not sure what the status might be yet #####
 
   30 1 * * * /home/canopylife/bin/cloudBackup.sh >> /home/canopylife/logs/cloudBackup.log 2>&1
 
