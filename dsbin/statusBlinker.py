@@ -10,7 +10,10 @@ from time import sleep
 import board
 import adafruit_dotstar as dotstar
 
-pixels = dotstar.DotStar(board.SCK, board.MOSI, 1, brightness=1.0, pixel_order=dotstar.RGB)
+try:
+    pixels = dotstar.DotStar(board.SCK, board.MOSI, 1, brightness=1.0, pixel_order=dotstar.RGB)
+except AttributeError:
+    pixels = dotstar.DotStar(board.SCLK, board.MOSI, 1, brightness=1.0, pixel_order=dotstar.RGB)
 
 def blinking_slowPURPLE(): # A slower purple blinking that asks the user to intervene
     while True:
