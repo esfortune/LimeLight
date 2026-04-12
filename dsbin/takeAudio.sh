@@ -4,7 +4,7 @@
 
 # This script takes an Audio Recording from a AudioMoth USB microphone.
 # It also makes an entry into our logging file.
-# The -d is duration in seconds. We default 60 seconds.
+# The -d is duration in seconds. We default 30 seconds.
 
 #########################################################################
 ## SET VARIABLES
@@ -37,7 +37,10 @@ if [ ! -d "$DIR" ]; then
   mkdir -p "$DIR"
 fi
 
-arecord -D hw:CARD=Microphone,DEV=0 -f S16_LE -r 384000 -d 60 /home/canopylife/data/curdat/Audio/$filename
+/home/canopylife/bin/statusBlinker.py 3 &
 
-echo $location", "$serialNum", audio, "$filename", AudioMoth, S16_LE, 384000, 60" >> /home/canopylife/data/curdat/dataLog.csv
-echo $location", "$serialNum", audio, "$filename", AudioMoth, S16_LE, 384000, 60" 
+# arecord -D hw:CARD=Microphone,DEV=0 -f S16_LE -r 384000 -d 30 /home/canopylife/data/curdat/Audio/$filename # Ultrasound / microMoth
+arecord -D hw:CARD=Microphone,DEV=0 -f S16_LE -r 48000 -d 30 /home/canopylife/data/curdat/Audio/$filename # Lavalier microphone
+
+echo $location", "$serialNum", audio, "$filename", AudioMoth, S16_LE, 384000, 30" >> /home/canopylife/data/curdat/dataLog.csv
+echo $location", "$serialNum", audio, "$filename", AudioMoth, S16_LE, 384000, 30" 
