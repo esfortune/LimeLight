@@ -26,7 +26,9 @@ diskUsage = str(round(diskTotal / (1024**3))) + "Gb, " + str(round(diskUsed / (1
 
 diskPerCentRemaining = "Percent Free:  " + str(round((diskFree / diskTotal) * 100)) + " %"
 
-tzResult = subprocess.run(["cat", "/etc/timezone"], capture_output=True, text=True)
+# tzResult = subprocess.run(["cat", "/etc/timezone"], capture_output=True, text=True)
+tzResult = subprocess.run(["timedatectl", "show", "--property=Timezone", "--value"], capture_output=True, text=True)
+# timedatectl show --property=Timezone --value
 timeZone = "Device TimeZone: " + tzResult.stdout.strip() + "\n"
 
 currentMode = subprocess.run([c.checkMode], capture_output=True, text=True)
