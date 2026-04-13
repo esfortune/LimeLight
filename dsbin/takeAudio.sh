@@ -42,5 +42,5 @@ fi
 # arecord -D hw:CARD=Microphone,DEV=0 -f S16_LE -r 384000 -d 30 /home/canopylife/data/curdat/Audio/$filename # Ultrasound / microMoth
 arecord -D hw:CARD=Microphone,DEV=0 -f S16_LE -r 48000 -d 30 /home/canopylife/data/curdat/Audio/$filename # Lavalier microphone
 
-echo $location", "$serialNum", audio, "$filename", AudioMoth, S16_LE, 384000, 30" >> /home/canopylife/data/curdat/dataLog.csv
-echo $location", "$serialNum", audio, "$filename", AudioMoth, S16_LE, 384000, 30" 
+echo $location", "$serialNum", audio, "$filename", AudioMoth, S16_LE, 48000, 30" >> /home/canopylife/data/curdat/dataLog.csv
+echo $location", "$serialNum", audio, "$filename", AudioMoth, S16_LE, 48000, 30" 
