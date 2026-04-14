@@ -1,0 +1,18 @@
+# Basic scheduling (crontab) format
+# *    *    *    *    *  /command/to/be/executed
+# ┬    ┬    ┬    ┬    ┬
+# │    │    │    │    └─  Day of Week   (0=Sun .. 6=Sat)
+# │    │    │    └──────  Month         (1..12)
+# │    │    └───────────  Day of Month  (1..31)
+# │    └────────────────  Hour          (0..23)
+# └─────────────────────  Minute        (0..59)
+
+##### SCHEDULE (CRONTAB FORMAT) BEGINS HERE
+# Ensure that the UV Attractor LED and White Panel LED are turned off each day at 9:01am and 9:02am.
+1-2 9 * * * /home/canopylife/bin/allLEDsOFF.sh >> /home/canopylife/data/curdat/errorlog.txt 2>&1
+
+# Run the daily backup at 9am, noon, and 5pm every day. We run it 3 times to increase the likelihood that it happens every day.
+0 9 * * * /home/canopylife/bin/dailyBackup.sh
+0 12 * * * /home/canopylife/bin/dailyBackup.sh
+0 17 * * * /home/canopylife/bin/dailyBackup.sh
+

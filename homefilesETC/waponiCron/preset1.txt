@@ -1,0 +1,20 @@
+## ALL-NIGHT-LONG! Overnight photo shoot: 7pm (19) to 4am.
+
+# Turn on the attractor lights 30 minutes prior to first photo (6:30pm)
+30 18 * * * /home/canopylife/bin/attractorON.sh >> /home/canopylife/data/curdat/errorlog.txt 2>&1
+
+# From 8pm to midnight, take a Studio photo every 1 minutes
+*/1 19-23 * * * /home/canopylife/bin/takeStudioPhoto.sh >> /home/canopylife/data/curdat/errorlog.txt 2>&1
+
+# From midnight until 4am, take a Studio photo every 1 minutes
+*/1 0-3 * * * /home/canopylife/bin/takeStudioPhoto.sh >> /home/canopylife/data/curdat/errorlog.txt 2>&1
+0 4 * * * /home/canopylife/bin/takeStudioPhoto.sh >> /home/canopylife/data/curdat/errorlog.txt 2>&1
+
+# Turn off the attractor lights in the morning at 4am
+1 4 * * * /home/canopylife/bin/allLEDsOFF.sh >> /home/canopylife/data/curdat/errorlog.txt 2>&1
+2 4 * * * /home/canopylife/bin/allLEDsOFF.sh >> /home/canopylife/data/curdat/errorlog.txt 2>&1
+
+# Take GPS readings twice a day at the sevens (7am and 7pm)
+0 7 * * * /home/canpopylife/bin/takeGPS.sh >> /home/canopylife/data/curdat/errorlog.txt 2>&1
+0 19 * * * /home/canpopylife/bin/takeGPS.sh >> /home/canopylife/data/curdat/errorlog.txt 2>&1
+
