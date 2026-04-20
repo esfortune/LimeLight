@@ -23,7 +23,24 @@ if [ -d "$workingDIR" ]; then
 
    cd smaller
 
-   ffmpeg -framerate 30 -pattern_type glob -i '*.pnm' -c:v libx264 -pix_fmt yuv420p output.mp4
+   # Generate SRT subtitle file mapping each frame to its original .jpg filename
+   ls -1 *.pnm | sort | awk '{
+       label = substr($0, 1, length($0)-4) ".jpg"
+       n = NR - 1
+       s = int(n * 1000 / 30)
+       e = int((n + 1) * 1000 / 30)
+       printf "%d\n%02d:%02d:%02d,%03d --> %02d:%02d:%02d,%03d\n%s\n\n",
+           NR,
+           int(s/3600000), int((s%3600000)/60000), int((s%60000)/1000), s%1000,
+           int(e/3600000), int((e%3600000)/60000), int((e%60000)/1000), e%1000,
+           label
+   }' > subtitles.srt
+
+   ffmpeg -framerate 30 -pattern_type glob -i '*.pnm' \
+       -vf "subtitles=subtitles.srt:force_style='FontSize=10,PrimaryColour=&H00FFFFFF,OutlineColour=&H00000000,Outline=1,Shadow=0,Alignment=1,MarginL=10,MarginV=10'" \
+       -c:v libx264 -pix_fmt yuv420p output.mp4
+
+   rm subtitles.srt
 
 #   mv output.mp4 "../${serial}_${location}_${datestamp}.mp4"  ### Old MOVER
 
