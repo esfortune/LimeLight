@@ -24,6 +24,7 @@ location=$(head -1 /home/canopylife/location.txt | tr -cd '[:alnum:]')
 serialNum=$(head -1 /home/canopylife/serialNumber.txt | tr -cd '[:alnum:]')
 
 yearstr=$(date +"%Y")
+timestamp=$(date +"%Y%m%d%H%M")
 
 # Get our GPIO pins for LED lcatching relays from config.py
 attractorOFF=`grep attractorOFF_gpio /home/canopylife/bin/config.py | sed 's/[^0-9]//g'`
@@ -46,15 +47,15 @@ cd $DIR
 ## Switch LED lights for PHOTO
 
 ## Old Method
-# gpioset gpiochip0 $panelON=1            # Set Panel On (high)
-# gpioset gpiochip0 $attractorOFF=1       # Set Attractor Off (high)
-# sleep 1
-# gpioset gpiochip0 $panelON=0            # Set Panel On (low)
-# gpioset gpiochip0 $attractorOFF=0       # Set Attractor (low)
+gpioset gpiochip0 $panelON=1            # Set Panel On (high)
+gpioset gpiochip0 $attractorOFF=1       # Set Attractor Off (high)
+sleep 1
+gpioset gpiochip0 $panelON=0            # Set Panel On (low)
+gpioset gpiochip0 $attractorOFF=0       # Set Attractor (low)
 
 ## New Method
-gpioset --chip gpiochip0 --toggle 200ms,0 $panelON=1   # Pulse GPIO high for 200ms then low
-gpioset --chip gpiochip0 --toggle 200ms,0 $attractorOFF=1   # Pulse GPIO high for 200ms then low
+# gpioset --chip gpiochip0 --toggle 200ms,0 $panelON=1   # Pulse GPIO high for 200ms then low
+# gpioset --chip gpiochip0 --toggle 200ms,0 $attractorOFF=1   # Pulse GPIO high for 200ms then low
 
 # Sleep 3 seconds to ensure that the lights are stable
 sleep 3
@@ -66,31 +67,32 @@ sleep 3
 # rpicam-still -n --datetime --autofocus-mode manual --lens-position 7 --sharpness 2 --exposure sport
 # filename=`ls -t *.jpg | head -1`
 
-takeCam0.sh
+/home/canopylife/bin/takeCam0.sh
 sleep 1
-takeCam1.sh
+/home/canopylife/bin/takeCam1.sh
+sleep 1
 
 filename=`ls -t *.jpg | head -1` 
 
-readGPS.sh
+/home/canopylife/bin/readGPS.sh
 
-temp=`vcgencmd measure_temp`
+temp=`vcgencmd measure_temp | sed s/temp\=//g | sed s/\'C//g`
 
 # Log the photo
-echo $location", "$serialNum", DualStudioCan, "$Filename", "$temp >> /home/canopylife/data/curdat/dataLog.csv
-echo $location", "$serialNum", DualStudioCan, "$Filename", "$temp 
+echo $timestamp, $location", "$serialNum", DualStudioCam, "$filename", "$temp >> /home/canopylife/data/curdat/dataLog.csv
+echo $timestamp, $location", "$serialNum", DualStudioCam, "$filename", "$temp 
 
 #########################################################################
 ## Switch LED lights for ATTRACTION
 
 ## Old Method
-# gpioset gpiochip0 $attractorON=1         # Set GPIO 16 to high (3.3V)
-# gpioset gpiochip0 $panelOFF=1            # Set GPIO 12 to low (0V)
-# sleep 1
-# gpioset gpiochip0 $attractorON=0         # Set GPIO 16 to high (3.3V)
-# gpioset gpiochip0 $panelOFF=0            # Set GPIO 12 to low (0V)
+gpioset gpiochip0 $attractorON=1         # Set GPIO 16 to high (3.3V)
+gpioset gpiochip0 $panelOFF=1            # Set GPIO 12 to low (0V)
+sleep 1
+gpioset gpiochip0 $attractorON=0         # Set GPIO 16 to high (3.3V)
+gpioset gpiochip0 $panelOFF=0            # Set GPIO 12 to low (0V)
 
 ## New Method
-gpioset --chip gpiochip0 --toggle 200ms,0 $panelOFF=1   # Pulse GPIO high for 200ms then low
-gpioset --chip gpiochip0 --toggle 200ms,0 $attractorON=1   # Pulse GPIO high for 200ms then low
+# gpioset --chip gpiochip0 --toggle 200ms,0 $panelOFF=1   # Pulse GPIO high for 200ms then low
+# gpioset --chip gpiochip0 --toggle 200ms,0 $attractorON=1   # Pulse GPIO high for 200ms then low
 
