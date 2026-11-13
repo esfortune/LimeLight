@@ -1,0 +1,5 @@
+sudo ~/ClaudePlayground/WittyPi5/install.sh
+
+
+Resume Claude
+claude --resume ebefd5f2-4193-4da5-bdbe-44ce56520c1b

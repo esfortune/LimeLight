@@ -1,0 +1,9 @@
+[Unit]
+Description=Witty Pi 5: re-read schedule once a day
+
+[Timer]
+OnCalendar=*-*-* 00:05:00
+Persistent=false
+
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,32 @@
+# ---------------------------------------------------------------------------
+#  Witty Pi 5 on/off schedule   (read by: wpsched apply)
+# ---------------------------------------------------------------------------
+#  The Pi is powered ON during each ON window and OFF otherwise.
+#  Times are LOCAL system time, 24 h clock, HH:MM-HH:MM.
+#  A window may cross midnight (e.g. ON 22:00-01:30).
+#  Windows less than 3 minutes apart are merged into one.
+#  No ON lines at all = scheduling disabled (Pi stays on).
+#
+#  The file is re-read at every boot (i.e. at the start of each ON window),
+#  once a day at 00:05, and whenever you run:   wpsched apply
+#  Preview without touching the hardware:       wpsched plan
+# ---------------------------------------------------------------------------
+
+ON 01:00-23:00
+# ON 05:00-12:30
+# ON 13:00-15:30
+# ON 16:00-23:30
+
+# --- Power protection -------------------------------------------------------
+# Witty Pi asks the Pi to shut down cleanly when Vin drops below LOW_VOLTAGE.
+# 11.5 V suits a 12 V lead-acid/AGM battery under light load (~20% charge left).
+# For a 12 V (4S) LiFePO4 battery use 12.0 instead.  0 = disabled.
+LOW_VOLTAGE 11.0
+
+# Power the Pi back on automatically once Vin rises above this (e.g. solar
+# recharge).  0 = disabled: the Pi then just waits for the next ON window.
+RECOVERY_VOLTAGE 0
+
+# Seconds after power is (re)connected before the Pi is switched on.
+# Lets the Pi restart after a total power loss.  255 = never auto-start.
+DEFAULT_ON_DELAY 10

@@ -1,0 +1,14 @@
+[Unit]
+Description=Witty Pi 5: read ~/wittypi_schedule.txt and arm next on/off alarms
+Wants=wp5d.service
+After=wp5d.service time-sync.target
+
+[Service]
+Type=oneshot
+User=@USER@
+# give wp5d a moment to copy the Witty Pi RTC into the system clock
+ExecStartPre=/bin/sleep 15
+ExecStart=/usr/local/bin/wpsched apply
+
+[Install]
+WantedBy=multi-user.target

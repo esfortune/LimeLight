@@ -1,0 +1,13 @@
+[Unit]
+Description=Witty Pi 5: log readings at boot and at shutdown
+After=wpsched-apply.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+User=@USER@
+ExecStart=/usr/local/bin/wpsched log boot --quiet
+ExecStop=/usr/local/bin/wpsched log shutdown --quiet
+
+[Install]
+WantedBy=multi-user.target

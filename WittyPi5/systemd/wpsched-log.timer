@@ -1,0 +1,9 @@
+[Unit]
+Description=Witty Pi 5: hourly system logging
+
+[Timer]
+OnCalendar=hourly
+AccuracySec=10s
+
+[Install]
+WantedBy=timers.target
