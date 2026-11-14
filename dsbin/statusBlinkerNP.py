@@ -28,7 +28,9 @@ Usage examples
     statusBlinkerNP.py off            # make sure the LED is dark
     statusBlinkerNP.py test           # red, green, blue once each - check wiring
     statusBlinkerNP.py --list         # show every pattern and what it means
-    statusBlinkerNP.py attention --brightness 0.3 --pixels 1
+    statusBlinkerNP.py test --verbose      # print what the LED should show
+    statusBlinkerNP.py test --order RGB    # try another colour order
+    statusBlinkerNP.py attention --brightness 0.3 --pixels 8
 
 "Forever" patterns run until the process is stopped (Ctrl-C, `kill`, or a
 parent program terminating it).  In every case the LED is switched off
@@ -44,6 +46,12 @@ from dataclasses import dataclass
 # Default data pin, used only if config.py cannot be found.
 DEFAULT_PIN = 26
 
+# Colour byte order the LED expects.  Almost all NeoPixels are GRB; a few
+# (e.g. Adafruit's 8mm through-hole NeoPixel) are RGB, and RGBW NeoPixels
+# have a fourth, white channel ("GRBW").  Wrong colours usually mean this is
+# wrong: run the `test` pattern and try --order.
+DEFAULT_ORDER = "GRB"
+
 # ---------------------------------------------------------------------------
 # Colours (24-bit 0xRRGGBB).  Half-intensity green/purple match the original
 # script; they are bright enough to see and much easier on the eyes.
@@ -53,6 +61,9 @@ RED = 0xFF0000
 GREEN = 0x008000
 BLUE = 0x0000FF
 PURPLE = 0x800080
+
+# Names used by --verbose output.
+COLOUR_NAMES = {OFF: "off", RED: "red", GREEN: "green", BLUE: "blue", PURPLE: "purple"}
 
 
 @dataclass(frozen=True)
@@ -131,8 +142,8 @@ NUMERIC_CODES = {
 }
 
 
-def config_pin(name: str, fallback: int) -> int:
-    """Read a GPIO number from the MothPad config.py, if it is available.
+def config_value(name: str, fallback):
+    """Read a setting (e.g. a GPIO number) from the MothPad config.py, if available.
 
     config.py normally sits in the same directory as this script, which
     Python searches first.  If it is missing (e.g. testing elsewhere) or
@@ -181,17 +192,28 @@ def parse_args(argv=None) -> argparse.Namespace:
     )
     parser.add_argument(
         "-p", "--pin", type=int,
-        default=config_pin("statusNeoPixel_gpio", DEFAULT_PIN),
+        default=config_value("statusNeoPixel_gpio", DEFAULT_PIN),
         help="GPIO (BCM) number of the NeoPixel data line "
              "(default: statusNeoPixel_gpio in config.py, else %(default)s)",
     )
     parser.add_argument(
-        "-n", "--pixels", type=int, default=10,
-        help="number of NeoPixels on the strip (default: 10)",
+        "-n", "--pixels", type=int, default=1,
+        help="number of NeoPixels on the strip (default: 1)",
+    )
+    parser.add_argument(
+        "-o", "--order", type=str.upper,
+        default=config_value("statusNeoPixel_order", DEFAULT_ORDER),
+        choices=["GRB", "RGB", "BRG", "BGR", "RBG", "GBR", "GRBW", "RGBW"],
+        help="colour byte order the LED expects (default: statusNeoPixel_order "
+             "in config.py, else %(default)s)",
     )
     parser.add_argument(
         "-b", "--brightness", type=float, default=1.0,
         help="overall brightness from 0.0 to 1.0 (default: 1.0)",
+    )
+    parser.add_argument(
+        "-v", "--verbose", action="store_true",
+        help="print each colour change with a timestamp (for diagnosing problems)",
     )
     parser.add_argument(
         "-l", "--list", action="store_true",
@@ -211,7 +233,7 @@ def parse_args(argv=None) -> argparse.Namespace:
     return args
 
 
-def open_pixels(pin: int, count: int, brightness: float):
+def open_pixels(pin: int, count: int, brightness: float, order: str):
     """Create the NeoPixel object on the given GPIO pin.
 
     The hardware libraries are imported here, not at the top of the file,
@@ -233,7 +255,7 @@ def open_pixels(pin: int, count: int, brightness: float):
         sys.exit(f"statusBlinkerNP: GPIO {pin} is not a valid pin on this board")
 
     return neopixel.NeoPixel(
-        gpio, count, brightness=brightness, auto_write=False
+        gpio, count, brightness=brightness, auto_write=False, pixel_order=order
     )
 
 
@@ -243,7 +265,7 @@ def set_colour(pixels, colour: int) -> None:
     pixels.show()
 
 
-def run_pattern(pixels, pattern: Pattern) -> None:
+def run_pattern(pixels, pattern: Pattern, verbose: bool = False) -> None:
     """Play a pattern, keeping accurate timing.
 
     Rather than calling sleep(duration) after each step (which slowly drifts
@@ -251,11 +273,17 @@ def run_pattern(pixels, pattern: Pattern) -> None:
     "deadline" based on time.monotonic() and sleep only for whatever time
     remains.  The blink rhythm therefore stays steady however long it runs.
     """
-    deadline = time.monotonic()
+    start = deadline = time.monotonic()
     plays = 0
     while pattern.repeats is None or plays < pattern.repeats:
         for colour, duration in pattern.steps:
             set_colour(pixels, colour)
+            if verbose:
+                # Show what the LED *should* be doing right now, so it can
+                # be compared with what it actually does.
+                name = COLOUR_NAMES.get(colour, "?")
+                print(f"{time.monotonic() - start:8.3f}s  {name:<6} 0x{colour:06X}"
+                      f"  hold {duration:.2f}s", flush=True)
             deadline += duration
             remaining = deadline - time.monotonic()
             if remaining > 0:
@@ -267,7 +295,7 @@ def main(argv=None) -> int:
     args = parse_args(argv)
     pattern = PATTERNS[args.pattern]
 
-    pixels = open_pixels(args.pin, args.pixels, args.brightness)
+    pixels = open_pixels(args.pin, args.pixels, args.brightness, args.order)
 
     # Convert "polite" termination requests (kill, closing the terminal) into
     # the same KeyboardInterrupt that Ctrl-C raises, so a single `finally`
@@ -279,7 +307,7 @@ def main(argv=None) -> int:
     signal.signal(signal.SIGHUP, _stop)
 
     try:
-        run_pattern(pixels, pattern)
+        run_pattern(pixels, pattern, args.verbose)
     except KeyboardInterrupt:
         pass  # normal way to end a "forever" pattern
     finally:
