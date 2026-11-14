@@ -39,6 +39,7 @@ cleanly before the script exits, so it is never left stuck "on".
 
 import argparse
 import signal
+import subprocess
 import sys
 import time
 from dataclasses import dataclass
@@ -259,6 +260,31 @@ def open_pixels(pin: int, count: int, brightness: float, order: str):
     )
 
 
+def hold_pins_low(*pins: int) -> None:
+    """Keep the LED's wire(s) driven low after the script exits.
+
+    When the script finishes, the GPIO pin is released back to the
+    operating system.  What the pin does after that depends on the kernel
+    version: on some Raspberry Pi OS releases it is left floating, and the
+    LED reads the stray voltage as a stream of "1" bits - all colours fully
+    on, i.e. WHITE - instead of staying off.
+
+    `pinctrl` (part of Raspberry Pi OS) writes the pin settings directly to
+    the GPIO hardware, so they persist after this process ends.  Members of
+    the `gpio` group can run it without sudo.  If pinctrl is missing or
+    fails, a warning is printed but the script still exits normally.
+    """
+    for pin in pins:
+        try:
+            subprocess.run(
+                ["pinctrl", "set", str(pin), "op", "dl", "pd"],  # output, drive low, pull-down
+                check=True, capture_output=True, timeout=5,
+            )
+        except (OSError, subprocess.SubprocessError) as error:
+            print(f"warning: could not hold GPIO {pin} low ({error}); "
+                  "the LED may light up after exit", file=sys.stderr)
+
+
 def set_colour(pixels, colour: int) -> None:
     """Set every pixel to `colour` and push it to the LEDs in one transfer."""
     pixels.fill(colour)
@@ -318,6 +344,7 @@ def main(argv=None) -> int:
         time.sleep(0.01)
         set_colour(pixels, OFF)
         pixels.deinit()  # release the GPIO pin
+        hold_pins_low(args.pin)  # ...but keep it low so the LED stays off
     return 0
 
 
