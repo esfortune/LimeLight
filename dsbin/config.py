@@ -75,6 +75,24 @@ studioOFF_gpio = 6                                    # LEDs for photographs OFF
 
 switch_gpio = 23                                      # User switch for COLLECT or DOWNLOAD modes
 
+# Status LED (statusBlinkerNP.py / statusBlinkerDS.py).  These do NOT use SPI,
+# so the SPI0 bus (GPIO 8-11) is left entirely to the AD HAT.
+# NeoPixel and DotStar devices are never fitted together, so they share GPIO 26.
+statusNeoPixel_gpio = 26                              # NeoPixel data in (DIN), physical pin 37 (Pi 5 PIO)
+statusDotStarData_gpio = 26                           # DotStar data in (DI), physical pin 37
+statusDotStarClock_gpio = 5                           # DotStar clock in (CI), physical pin 29
+
+# Pins already taken by other hardware - do not reuse:
+#   GPIO 0, 1    HAT ID EEPROM (ID_SD / ID_SC)
+#   GPIO 2, 3    I2C (Witty Pi 5 HAT+, sensors)
+#   GPIO 7-11    SPI0 (Waveshare High-Precision AD HAT; CE1 on GPIO 7 is claimed by the SPI driver)
+#   GPIO 14, 15  UART0 (dtparam=uart0=on)
+#   GPIO 17, 18, 22  AD HAT DRDY, RESET, CS
+#   GPIO 6, 12, 13, 16, 23  see above
+#   GPIO 24, 25  avoided: used by Waveshare e-Paper HATs (BUSY, DC)
+#   GPIO 19-21   avoided: I2S audio / SPI1
+# Still free: GPIO 4, 27
+
 #######################################
 ### Which data do we want to collect for default? (1 for yes, 0 for no)
 
