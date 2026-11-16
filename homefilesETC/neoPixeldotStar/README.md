@@ -55,6 +55,8 @@ python3 -m venv ~/PyEnvs/neopixel
     adafruit-circuitpython-neopixel \
     Adafruit-Blinka-Raspberry-Pi5-Neopixel \
     adafruit-circuitpython-dotstar
+
+pip install adafruit-blinka adafruit-circuitpython-neopixel Adafruit-Blinka-Raspberry-Pi5-Neopixel adafruit-circuitpython-dotstar Adafruit-Blinka-Raspberry-Pi-PWM gpiod
 ```
 
 - `adafruit-blinka` and `gpiod` give CircuitPython-style `board` pin access
